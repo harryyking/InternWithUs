@@ -1,9 +1,17 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 
 export default function Apply() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ApplyForm />
+    </Suspense>
+  )
+}
+
+function ApplyForm() {
   const searchParams = useSearchParams()
   const internshipId = searchParams.get("id")
 
