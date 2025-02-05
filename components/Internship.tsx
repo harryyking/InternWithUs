@@ -32,7 +32,11 @@ export function InternshipCard({
     <Card className="group hover:shadow-lg transition-all duration-300 border-gray-200">
       <CardHeader className="space-y-2">
         <div className="flex items-start justify-between">
-          <CardTitle className="text-xl font-bold text-gray-900">{title}</CardTitle>
+          <CardTitle className="text-xl font-bold text-gray-900 hover:text-primary">
+          <Link href={`/apply?id=${id}`} className="w-full">
+            {title}
+            </Link>
+            </CardTitle>
           <Badge 
             variant={daysUntilDeadline <= 7 ? "destructive" : "secondary"}
             className="ml-2"
@@ -68,17 +72,14 @@ export function InternshipCard({
           </div>
         </div>
       </CardContent>
-
-      <CardFooter className="pt-4">
-        <Link href={`/apply?id=${id}`} className="w-full">
-          <Button
-            className="w-full group-hover:bg-primary/90 transition-colors"
-            size="lg"
-          >
-            Apply Now
-          </Button>
-        </Link>
-      </CardFooter>
     </Card>
   )
 }
+
+
+
+// why is this important 
+// what can i do to make money or i am asking a wrong question.
+//  to make money you must something of value the world is demanding 
+// So if you have that thing then you will become rich. 
+//  Every good and perfect gift comes from the Lord 

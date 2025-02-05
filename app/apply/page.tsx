@@ -42,82 +42,7 @@ function ApplyForm() {
   const internshipId = searchParams.get("id")
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    university: "",
-    course: "",
-    graduationYear: "",
-    coverLetter: "",
-    resume: null as File | null,
-  })
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
-    }
-  }
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0]
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        setErrors(prev => ({ ...prev, resume: "File size should be less than 5MB" }))
-        return
-      }
-      setFormData((prev) => ({ ...prev, resume: file }))
-      if (errors.resume) {
-        setErrors((prev) => {
-          const newErrors = { ...prev }
-          delete newErrors.resume
-          return newErrors
-        })
-      }
-    }
-  }
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {}
-    if (!formData.name) newErrors.name = "Name is required"
-    if (!formData.email) newErrors.email = "Email is required"
-    if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = "Invalid email format"
-    if (!formData.phone) newErrors.phone = "Phone number is required"
-    if (!formData.university) newErrors.university = "University is required"
-    if (!formData.course) newErrors.course = "Course is required"
-    if (!formData.graduationYear) newErrors.graduationYear = "Graduation year is required"
-    if (!formData.coverLetter) newErrors.coverLetter = "Cover letter is required"
-    if (!formData.resume) newErrors.resume = "Resume is required"
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (validateForm()) {
-      setIsSubmitting(true)
-      try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        console.log("Form submitted:", { ...formData, internshipId })
-        alert("Application submitted successfully!")
-      } catch (error) {
-        console.error("Error submitting form:", error)
-        alert("There was an error submitting your application. Please try again.")
-      } finally {
-        setIsSubmitting(false)
-      }
-    }
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -129,7 +54,7 @@ function ApplyForm() {
           </CardDescription>
         </CardHeader>
         
-        <form onSubmit={handleSubmit}>
+        <form>
           <CardContent className="space-y-6">
             {/* Personal Information */}
             <div className="space-y-4">
@@ -141,12 +66,9 @@ function ApplyForm() {
                   <Input
                     placeholder="Enter your full name"
                     name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className={errors.name ? "border-red-500" : ""}
                   />
                 </FormControl>
-                {errors.name && <FormMessage>{errors.name}</FormMessage>}
+              
               </FormItem>
 
               <div className="grid gap-4 sm:grid-cols-2">
@@ -157,12 +79,10 @@ function ApplyForm() {
                       type="email"
                       placeholder="your.email@example.com"
                       name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className={errors.email ? "border-red-500" : ""}
+                      
                     />
                   </FormControl>
-                  {errors.email && <FormMessage>{errors.email}</FormMessage>}
+                 
                 </FormItem>
 
                 <FormItem>
@@ -172,12 +92,10 @@ function ApplyForm() {
                       type="tel"
                       placeholder="+233 XX XXX XXXX"
                       name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={errors.phone ? "border-red-500" : ""}
+                  
                     />
                   </FormControl>
-                  {errors.phone && <FormMessage>{errors.phone}</FormMessage>}
+                
                 </FormItem>
               </div>
             </div>
@@ -192,12 +110,10 @@ function ApplyForm() {
                   <Input
                     placeholder="Enter your university name"
                     name="university"
-                    value={formData.university}
-                    onChange={handleInputChange}
-                    className={errors.university ? "border-red-500" : ""}
+              
                   />
                 </FormControl>
-                {errors.university && <FormMessage>{errors.university}</FormMessage>}
+           
               </FormItem>
 
               <div className="grid gap-4 sm:grid-cols-2">
@@ -207,12 +123,8 @@ function ApplyForm() {
                     <Input
                       placeholder="Your course/program"
                       name="course"
-                      value={formData.course}
-                      onChange={handleInputChange}
-                      className={errors.course ? "border-red-500" : ""}
                     />
                   </FormControl>
-                  {errors.course && <FormMessage>{errors.course}</FormMessage>}
                 </FormItem>
 
                 <FormItem>
@@ -221,12 +133,8 @@ function ApplyForm() {
                     <Input
                       placeholder="YYYY"
                       name="graduationYear"
-                      value={formData.graduationYear}
-                      onChange={handleInputChange}
-                      className={errors.graduationYear ? "border-red-500" : ""}
                     />
                   </FormControl>
-                  {errors.graduationYear && <FormMessage>{errors.graduationYear}</FormMessage>}
                 </FormItem>
               </div>
             </div>
@@ -241,12 +149,9 @@ function ApplyForm() {
                   <Textarea
                     placeholder="Tell us why you're interested in this internship..."
                     name="coverLetter"
-                    value={formData.coverLetter}
-                    onChange={handleInputChange}
-                    className={`min-h-[150px] ${errors.coverLetter ? "border-red-500" : ""}`}
                   />
                 </FormControl>
-                {errors.coverLetter && <FormMessage>{errors.coverLetter}</FormMessage>}
+            
               </FormItem>
 
               <FormItem>
@@ -265,17 +170,11 @@ function ApplyForm() {
                         type="file"
                         className="hidden"
                         accept=".pdf"
-                        onChange={handleFileChange}
                       />
                     </label>
                   </div>
                 </FormControl>
-                {formData.resume && (
-                  <p className="text-sm text-gray-500">
-                    Selected file: {formData.resume.name}
-                  </p>
-                )}
-                {errors.resume && <FormMessage>{errors.resume}</FormMessage>}
+             
               </FormItem>
             </div>
           </CardContent>
