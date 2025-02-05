@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import {Roboto} from 'next/font/google'
+import {Gabarito} from 'next/font/google'
 
-const brandFont = Roboto({subsets: ["latin"], weight: ["100","400", "700"]})
+const brandFont = Gabarito({subsets: ["latin"], weight: ["400","500", "700"]})
 
 
 export const metadata: Metadata = {
