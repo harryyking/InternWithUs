@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { Card, CardContent, CardDescription, CardFooter, CardTitle, CardHeader } from "./ui/card"
+
 
 interface InternshipCardProps {
   id: number
@@ -12,8 +14,12 @@ interface InternshipCardProps {
 
 export function InternshipCard({ id, title, company, location, description, duration, deadline }: InternshipCardProps) {
   return (
-    <div className="border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-      <h2 className="text-xl font-semibold mb-2">{title}</h2>
+    <Card className="shadow-sm hover:shadow-md transition-shadow">
+      <CardHeader>
+
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
       <p className="text-gray-600 mb-2">
         {company} - {location}
       </p>
@@ -22,13 +28,17 @@ export function InternshipCard({ id, title, company, location, description, dura
         <span>Duration: {duration}</span>
         <span>Deadline: {deadline}</span>
       </div>
+      </CardContent>
+      <CardFooter>
       <Link
         href={`/apply?id=${id}`}
         className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition-colors inline-block"
       >
         Apply Now
       </Link>
-    </div>
+      </CardFooter>
+      
+    </Card>
   )
 }
 

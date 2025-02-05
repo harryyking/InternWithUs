@@ -3,6 +3,9 @@
 import { useState } from "react"
 import Header from "@/components/Header"
 import { InternshipCard } from "@/components/Internship"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+
 
 // Mock data for internships
 const allInternships = [
@@ -79,12 +82,11 @@ export default function Internships() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">Available Internships</h1>
 
         <div className="mb-6 flex flex-wrap gap-4">
-          <input
+          <Input
             type="text"
             placeholder="Search internships..."
             className="flex-grow p-2 border rounded"
