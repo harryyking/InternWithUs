@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Search, MapPin, Building2 } from "lucide-react"
+import Header from "@/components/Header"
 import { InternshipCard } from "@/components/Internship"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -67,16 +68,16 @@ const companies = [...new Set(allInternships.map((internship) => internship.comp
 
 export default function Internships() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [selectedLocation, setSelectedLocation] = useState("")
-  const [selectedCompany, setSelectedCompany] = useState("")
+  const [selectedLocation, setSelectedLocation] = useState<string | undefined>(undefined)
+  const [selectedCompany, setSelectedCompany] = useState<string | undefined>(undefined)
   const [currentPage, setCurrentPage] = useState(1)
   const internshipsPerPage = 6
 
   const filteredInternships = allInternships.filter(
     (internship) =>
       internship.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedLocation === "" || internship.location === selectedLocation) &&
-      (selectedCompany === "" || internship.company === selectedCompany)
+      (!selectedLocation || internship.location === selectedLocation) &&
+      (!selectedCompany || internship.company === selectedCompany)
   )
 
   const indexOfLastInternship = currentPage * internshipsPerPage
@@ -91,8 +92,8 @@ export default function Internships() {
 
   const clearFilters = () => {
     setSearchTerm("")
-    setSelectedLocation("")
-    setSelectedCompany("")
+    setSelectedLocation(undefined)
+    setSelectedCompany(undefined)
     setCurrentPage(1)
   }
 
@@ -127,7 +128,6 @@ export default function Internships() {
                 <SelectValue placeholder="All Locations" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Locations</SelectItem>
                 {locations.map((location) => (
                   <SelectItem key={location} value={location}>
                     {location}
@@ -145,7 +145,6 @@ export default function Internships() {
                 <SelectValue placeholder="All Companies" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Companies</SelectItem>
                 {companies.map((company) => (
                   <SelectItem key={company} value={company}>
                     {company}
