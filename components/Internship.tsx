@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardTitle, CardHeader } from "./ui/card"
-
+import { Button } from "./ui/button"
 
 interface InternshipCardProps {
   id: number
@@ -32,9 +32,8 @@ export function InternshipCard({ id, title, company, location, description, dura
       <CardFooter>
       <Link
         href={`/apply?id=${id}`}
-        className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition-colors inline-block"
       >
-        Apply Now
+       <Button>Apply Now</Button> 
       </Link>
       </CardFooter>
       
