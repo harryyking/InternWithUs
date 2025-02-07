@@ -74,14 +74,14 @@ export default function JobPostingForm() {
   }
 
   return (
-    <div className="max-w-4xl">
+    <div className="max-w-6xl">
       <Card>
         <CardHeader>
           <CardTitle className=" font-semibold">Post a New Job</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 relative">
               <FormField
                 control={form.control}
                 name="position"
@@ -381,12 +381,12 @@ export default function JobPostingForm() {
                 )}
               />
 
-              <div className="fixed bottom-0 shadow-md border flex justify-center items-center bg-background min-h-20 pt-4 pb-2 w-full">
-              <Button type="submit" className="w-full" disabled={isLoading} size={"lg"}>
-                {isLoading ? "Submitting..." : "Post Job"}
-              </Button>
-
+              <div className="absolute bottom-0 shadow-md border flex justify-center items-center bg-background min-h-20 p-4 w-full">
+                <Button type="submit" className="w-full" disabled={isLoading} size={"lg"}>
+                  {isLoading ? "Submitting..." : "Post Job"}
+                </Button>
               </div>
+
             </form>
           </Form>
         </CardContent>
