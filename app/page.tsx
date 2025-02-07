@@ -32,7 +32,7 @@ export default function Home() {
         
      
         <div 
-          className="relative h-[600px] flex flex-col overflow-hidden min-h-screen"
+          className="relative h-[600px] flex flex-col overflow-hidden"
           style={{
             backgroundImage: "url(https://images.pexels.com/photos/1181274/pexels-photo-1181274.jpeg)",
             backgroundSize: "cover",
@@ -42,7 +42,7 @@ export default function Home() {
           <Header/>
             
             <div className="absolute inset-0 bg-black/10" />
-            <div className='flex justify-center items-center '>
+            <div className='flex justify-center items-center min-h-screen'>
 
           <div className="relative z-10 text-center space-y-8 px-4 max-w-6xl mx-auto">
             <h1 className="text-3xl md:text-6xl font-medium text-white">
