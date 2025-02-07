@@ -28,20 +28,22 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
      <div className="relative">
      
-     <div>
-        <Header/>
+    
+        
      
         <div 
-          className="relative h-[600px] flex flex-col items-center justify-center overflow-hidden"
+          className="relative h-[600px] flex flex-col overflow-hidden"
           style={{
             backgroundImage: "url(https://images.pexels.com/photos/1181274/pexels-photo-1181274.jpeg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          
+          <Header/>
             
             <div className="absolute inset-0" />
+            <div className='flex justify-center items-center '>
+
           <div className="relative z-10 text-center space-y-8 px-4 max-w-6xl mx-auto">
             <h1 className="text-3xl md:text-6xl font-medium text-white">
               Find a job <span className="text-primary font-semibold mt-2">in Ghana</span>
@@ -77,7 +79,7 @@ export default function Home() {
               </div>
             </div>
             </div>
-          </div>
+            </div>
         </div>
 
         <div className="absolute bottom-0 left-0 right-0">
