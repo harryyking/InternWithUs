@@ -1,7 +1,9 @@
+'use client';
+
 import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import { Button } from "@/components/ui/button"
-import { Bold, Italic, List, ListOrdered } from "lucide-react"
+import { Bold, Italic, List, ListOrdered, Heading2 } from 'lucide-react'
 
 export const Tiptap = ({ onChange, value }: { onChange: (value: string) => void; value: string }) => {
   const editor = useEditor({
@@ -17,8 +19,8 @@ export const Tiptap = ({ onChange, value }: { onChange: (value: string) => void;
   }
 
   return (
-    <div className="border rounded-md h-[500px]">
-      <div className="flex items-center gap-2 p-2 border-b">
+    <div className="border rounded-md overflow-hidden">
+      <div className="flex items-center gap-2 p-2 border-b bg-white">
         <Button
           variant="ghost"
           size="icon"
@@ -38,6 +40,14 @@ export const Tiptap = ({ onChange, value }: { onChange: (value: string) => void;
         <Button
           variant="ghost"
           size="icon"
+          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          className={editor.isActive("heading", { level: 2 }) ? "bg-muted" : ""}
+        >
+          <Heading2 className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive("bulletList") ? "bg-muted" : ""}
         >
@@ -52,8 +62,12 @@ export const Tiptap = ({ onChange, value }: { onChange: (value: string) => void;
           <ListOrdered className="h-4 w-4" />
         </Button>
       </div>
-      <EditorContent editor={editor} className="p-4" />
+      <div className="bg-gray-50 h-[500px] overflow-y-auto">
+        <EditorContent 
+          editor={editor} 
+          className="p-4 min-h-full prose prose-sm max-w-none" 
+        />
+      </div>
     </div>
   )
 }
-
