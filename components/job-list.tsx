@@ -49,7 +49,7 @@ export default function JobList() {
           className="w-full"
         >
           <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow overflow-hidden">
-            <div className="flex flex-col md:flex-row items-start gap-4">
+            <div className="flex flex-row items-start gap-4">
               <img
                 src={job.logo || "/placeholder.svg"}
                 alt={`${job.company} logo`}
@@ -89,7 +89,7 @@ export default function JobList() {
               {job.cta && (
                 <Button 
                   variant={job.isAd ? "default" : "secondary"} 
-                  className="w-full md:w-auto text-xs md:text-sm mt-2 md:mt-0"
+                  className="w-auto text-xs md:text-sm mt-2 md:mt-0"
                 >
                   {job.cta}
                 </Button>

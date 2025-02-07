@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Briefcase, Building2, Users, ArrowRight } from "lucide-react";
 import JobList from "@/components/job-list";
-import Newsletter from "@/components/newsletter";
 import { JobFilters } from "@/components/job-filter";
 import { motion } from 'framer-motion';
 import { Header } from '@/components/header';
