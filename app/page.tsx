@@ -46,7 +46,7 @@ export default function Home() {
               Find a job <span className="text-primary font-semibold mt-2">in Ghana</span>
             </h1>
             
-            <p className="text-lg md:text-xl">
+            <p className="text-lg md:text-xl text-white">
               Discover thousands of job opportunities with all the information you need.
             </p>
             
