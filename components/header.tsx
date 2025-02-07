@@ -25,24 +25,13 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <a href="/" className="text-2xl font-bold text-primary">
-            RemoteOK
+            Work Dey Here
           </a>
-          <nav className="hidden md:flex items-center gap-6">
-            <a href="#" className="text-sm hover:text-primary transition-colors">
-              Find Jobs
-            </a>
-            <a href="#" className="text-sm hover:text-primary transition-colors">
-              Post a Job
-            </a>
-            <a href="#" className="text-sm hover:text-primary transition-colors">
-              Remote Companies
-            </a>
-          </nav>
         </div>
 
         <div className="hidden md:flex items-center gap-4">
           <Button variant="outline">Log in</Button>
-          <Button>Post a remote job</Button>
+          <Button>Post job</Button>
         </div>
 
         <button className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -67,7 +56,7 @@ export function Header() {
               <Button variant="outline" className="w-full">
                 Log in
               </Button>
-              <Button className="w-full">Post a remote job</Button>
+              <Button className="w-full">Post job</Button>
             </div>
           </nav>
         </div>

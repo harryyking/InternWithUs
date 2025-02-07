@@ -41,9 +41,9 @@ export default function Home() {
             <div className="absolute inset-0" />
           
           <div className="relative z-10 text-center space-y-8 px-4 max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold text-white">
-              Find Your Dream Job
-              <span className="block text-primary mt-2">in Ghana</span>
+            <h1 className="text-5xl md:text-7xl font-medium text-white">
+              Find a job
+              <span className="block text-primary font-semibold mt-2">in Ghana</span>
             </h1>
             
             <p className="text-lg md:text-xl text-gray-200">
@@ -86,46 +86,6 @@ export default function Home() {
           >
             <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,53.3C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
           </svg>
-        </div>
-      </div>
-
-      {/* Stats Section */}
-      <div className="bg-white dark:bg-gray-800 shadow-lg border-y border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {statsData.map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-center gap-4 justify-center">
-                <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                  <Icon size={24} />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{value}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Companies Section */}
-      <div className="py-12 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-center text-2xl font-semibold mb-8 text-gray-900 dark:text-white">
-            Trusted by leading companies
-          </h2>
-          <div className="flex flex-wrap justify-center gap-12 items-center">
-            {companies.map((company) => (
-              <div
-                key={company}
-                className="group cursor-pointer"
-              >
-                <span className="text-xl font-semibold text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors duration-300">
-                  {company}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
