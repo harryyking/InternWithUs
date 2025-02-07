@@ -1,9 +1,9 @@
-'use client';
+"use client"
 
 import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import { Button } from "@/components/ui/button"
-import { Bold, Italic, List, ListOrdered, Heading2 } from 'lucide-react'
+import { Bold, Italic, List, ListOrdered, Heading2 } from "lucide-react"
 
 export const Tiptap = ({ onChange, value }: { onChange: (value: string) => void; value: string }) => {
   const editor = useEditor({
@@ -63,11 +63,27 @@ export const Tiptap = ({ onChange, value }: { onChange: (value: string) => void;
         </Button>
       </div>
       <div className="bg-gray-50 h-[500px] overflow-y-auto">
-        <EditorContent 
-          editor={editor} 
-          className="p-4 min-h-full prose prose-sm max-w-none" 
+        <EditorContent
+          editor={editor}
+          className="p-4 min-h-full prose prose-sm max-w-none focus-visible:outline-none"
         />
       </div>
+      <style jsx global>{`
+        .ProseMirror {
+          min-height: 100%;
+        }
+        .ProseMirror:focus {
+          outline: none !important;
+        }
+        .ProseMirror p.is-editor-empty:first-child::before {
+          color: #adb5bd;
+          content: attr(data-placeholder);
+          float: left;
+          height: 0;
+          pointer-events: none;
+        }
+      `}</style>
     </div>
   )
 }
+
