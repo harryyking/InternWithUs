@@ -29,6 +29,7 @@ export default function Home() {
      
       {/* Hero Section */}
      <div className="relative">
+     <Header/>
         <div 
           className="relative h-[600px] flex items-center justify-center overflow-hidden"
           style={{
@@ -37,12 +38,11 @@ export default function Home() {
             backgroundPosition: "center",
           }}
         >
+            
             <div className="absolute inset-0" />
-            <Header/>
           <div className="relative z-10 text-center space-y-8 px-4 max-w-6xl mx-auto">
             <h1 className="text-3xl md:text-6xl font-medium text-white">
-              Find a job
-              <span className="block text-primary font-semibold mt-2">in Ghana</span>
+              Find a job <span className="block text-primary font-semibold mt-2">in Ghana</span>
             </h1>
             
             <p className="text-lg md:text-xl text-gray-200">
