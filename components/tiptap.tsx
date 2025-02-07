@@ -17,7 +17,7 @@ export const Tiptap = ({ onChange, value }: { onChange: (value: string) => void;
   }
 
   return (
-    <div className="border rounded-md">
+    <div className="border rounded-md h-[500px]">
       <div className="flex items-center gap-2 p-2 border-b">
         <Button
           variant="ghost"
