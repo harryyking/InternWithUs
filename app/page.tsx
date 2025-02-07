@@ -40,7 +40,7 @@ export default function Home() {
         >
             <div className="absolute inset-0" />
           
-          <div className="relative z-10 text-center space-y-8 px-4 max-w-4xl mx-auto">
+          <div className="relative z-10 text-center space-y-8 px-4 max-w-6xl mx-auto">
             <h1 className="text-5xl md:text-7xl font-medium text-white">
               Find a job
               <span className="block text-primary font-semibold mt-2">in Ghana</span>
