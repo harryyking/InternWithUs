@@ -1,5 +1,4 @@
 "use client"
-
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
@@ -21,8 +20,7 @@ const jobs = [
     company: "LinkedIn Headshots",
     logo: "/placeholder.svg?height=50&width=50",
     title: "Get Professional LinkedIn Headshots",
-    description:
-      "No studio needed – create perfect headshots from your laptop or phone. Get noticed 230% more by recruiters!",
+    description: "No studio needed – create perfect headshots from your laptop or phone. Get noticed 230% more by recruiters!",
     tags: ["Photography", "Professional"],
     cta: "Get headshots",
     isAd: true,
@@ -48,30 +46,57 @@ export default function JobList() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
+          className="w-full"
         >
-          <Card className="p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-start gap-4">
+          <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow overflow-hidden">
+            <div className="flex flex-col md:flex-row items-start gap-4">
               <img
                 src={job.logo || "/placeholder.svg"}
                 alt={`${job.company} logo`}
-                className="w-12 h-12 rounded-full"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full self-center md:self-start"
               />
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-semibold">{job.title}</h3>
-                  {job.isVerified && <Badge variant="secondary">Verified</Badge>}
+              <div className="flex-1 w-full text-center md:text-left">
+                <div className="flex flex-col md:flex-row items-center gap-2 justify-center md:justify-start">
+                  <h3 className="text-base md:text-lg font-semibold truncate max-w-full">
+                    {job.title}
+                  </h3>
+                  {job.isVerified && (
+                    <Badge variant="secondary" className="text-xs md:text-sm">
+                      Verified
+                    </Badge>
+                  )}
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{job.description}</p>
-                <div className="flex flex-wrap gap-2 mt-3">
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">
+                  {job.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mt-2 justify-center md:justify-start">
                   {job.tags.map((tag) => (
-                    <Badge key={tag} variant="outline">
+                    <Badge 
+                      key={tag} 
+                      variant="outline" 
+                      className="text-[10px] md:text-xs"
+                    >
                       {tag}
                     </Badge>
                   ))}
-                  {job.salary && <Badge variant="secondary">{job.salary}</Badge>}
+                  {job.salary && (
+                    <Badge 
+                      variant="secondary" 
+                      className="text-[10px] md:text-xs"
+                    >
+                      {job.salary}
+                    </Badge>
+                  )}
                 </div>
               </div>
-              {job.cta && <Button variant={job.isAd ? "default" : "secondary"}>{job.cta}</Button>}
+              {job.cta && (
+                <Button 
+                  variant={job.isAd ? "default" : "secondary"} 
+                  className="w-full md:w-auto text-xs md:text-sm mt-2 md:mt-0"
+                >
+                  {job.cta}
+                </Button>
+              )}
             </div>
           </Card>
         </motion.div>
@@ -79,4 +104,3 @@ export default function JobList() {
     </div>
   )
 }
-

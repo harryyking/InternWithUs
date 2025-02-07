@@ -42,7 +42,7 @@ export default function Home() {
           <Header/>
             
             <div className="absolute inset-0 bg-black/10" />
-            <div className='flex justify-center items-center min-h-screen'>
+            <div className='flex justify-center items-center h-[600px]'>
 
           <div className="relative z-10 text-center space-y-8 px-4 max-w-6xl mx-auto">
             <h1 className="text-3xl md:text-6xl font-medium text-white">
