@@ -1,6 +1,6 @@
 
 import { Button } from "./ui/button"
-import { Menu, X } from "lucide-react"
+import Link from "next/link"
 
 export function Header() {
 
@@ -15,9 +15,10 @@ export function Header() {
           </a>
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline">Log in</Button>
+        <div className="flex items-center gap-4">
+          <Link href="/jobs">
           <Button>Post job</Button>
+          </Link>
         </div>
       </div>
     </header>

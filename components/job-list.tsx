@@ -97,7 +97,7 @@ export default function JobList() {
               whileHover={{ opacity: 0.8 }}
               className="absolute right-4 top-1/2 transform -translate-y-1/2"
             >
-              <Button variant="outline" className="opacity-0 hover:opacity-100 transition-opacity">
+              <Button variant="outline" className="opacity-30 hover:opacity-100 transition-opacity">
                 Apply
               </Button>
             </motion.div>

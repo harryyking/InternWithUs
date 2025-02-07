@@ -53,12 +53,7 @@ model User {
   project       Project[]
   accounts      Account[]
   sessions      Session[]
-  applications  JobApplication[]
-  postedJobs    Job[]       @relation("JobPoster")
-  savedJobs     Job[]       @relation("SavedJobs")
-  companies     Company[]   @relation("CompanyAdmin")
   skills        UserSkill[]
-  preferences   UserPreference?
   notifications Notification[]
 
   createdAt     DateTime    @default(now())
@@ -67,52 +62,22 @@ model User {
   @@map("users")
 }
 
-model Company {
-  id            String    @id @default(cuid())
-  name          String
-  description   String    @db.Text
-  logo          String?
-  website       String?
-  industry      Industry  @relation(fields: [industryId], references: [id])
-  industryId    String
-  size          CompanySize
-  founded       Int?
-  location      String
-  
-  jobs          Job[]
-  admins        User[]    @relation("CompanyAdmin")
-
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  @@index([industryId])
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+  @@map("verification_tokens")
 }
 
-enum CompanySize {
-  STARTUP
-  SMALL
-  MEDIUM
-  LARGE
-  ENTERPRISE
-}
-
-model Industry {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  description String?   @db.Text
-  companies   Company[]
-  jobs        Job[]
-
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-}
 
 model Skill {
   id          String      @id @default(cuid())
   name        String      @unique
   category    String
   users       UserSkill[]
-  jobs        Job[]       @relation("JobSkills")
+  
 
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -142,22 +107,6 @@ enum SkillLevel {
   EXPERT
 }
 
-model UserPreference {
-  id                String    @id @default(cuid())
-  userId            String    @unique
-  jobAlerts         Boolean   @default(true)
-  alertFrequency    AlertFrequency @default(DAILY)
-  desiredSalaryMin  Float?
-  desiredSalaryMax  Float?
-  preferredLocation String?
-  preferredJobTypes EmploymentType[]
-  preferredIndustries String[]
-  
-  user              User      @relation(fields: [userId], references: [id])
-
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-}
 
 enum AlertFrequency {
   REALTIME
@@ -200,32 +149,19 @@ model Job {
   id              String    @id @default(cuid())
   position        String
   description     String    @db.Text
+  companyName     String
   employmentType  EmploymentType
   location        String
   locationType    LocationType @default(ONSITE)
   benefits        String[]
-  requirements    String[]
-  responsibilities String[]
   tags            String[]
-  salary          Json      // Store min and max salary range
+  salary          Json      
   email           String
   link            String?
-  
+  region          String[]
   status          JobStatus @default(ACTIVE)
   featured        Boolean   @default(false)
-  
-  companyId       String
-  company         Company   @relation(fields: [companyId], references: [id])
-  posterId        String
-  poster          User      @relation("JobPoster", fields: [posterId], references: [id])
-  
-  industryId      String
-  industry        Industry  @relation(fields: [industryId], references: [id])
-  
-  applications    JobApplication[]
-  savedBy         User[]    @relation("SavedJobs")
-  requiredSkills  Skill[]   @relation("JobSkills")
-
+  apply           String    @db.Text
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   expiresAt       DateTime?
@@ -233,25 +169,6 @@ model Job {
   @@index([status])
   @@index([employmentType])
   @@index([locationType])
-  @@index([companyId])
-  @@index([industryId])
-}
-
-model JobApplication {
-  id            String    @id @default(cuid())
-  jobId         String
-  applicantId   String
-  coverLetter   String?   @db.Text
-  resume        String    // URL to stored resume
-  status        ApplicationStatus @default(PENDING)
-  
-  job           Job       @relation(fields: [jobId], references: [id])
-  applicant     User      @relation(fields: [applicantId], references: [id])
-  
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  @@unique([jobId, applicantId])
 }
 
 enum JobStatus {
@@ -275,13 +192,7 @@ enum LocationType {
   ONSITE
 }
 
-enum ApplicationStatus {
-  PENDING
-  REVIEWED
-  SHORTLISTED
-  REJECTED
-  ACCEPTED
-}
+// Users Model
 
 model Education {
   id            String    @id @default(cuid())
