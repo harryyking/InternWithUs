@@ -38,7 +38,7 @@ export default function Home() {
             backgroundPosition: "center",
           }}
         >
-            <div className="absolute inset-0 bg-black/60" />
+            <div className="absolute inset-0 bg-black/40" />
           
           <div className="relative z-10 text-center space-y-8 px-4 max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold text-white">
