@@ -6,6 +6,7 @@ export function Header() {
 
   return (
     <header
+    className="bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">

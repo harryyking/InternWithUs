@@ -29,15 +29,16 @@ export default function Home() {
      
       {/* Hero Section */}
      <div className="relative">
-     <Header/>
+     
         <div 
-          className="relative h-[600px] flex items-center justify-center overflow-hidden"
+          className="relative h-[600px] flex flex-col items-center justify-center overflow-hidden"
           style={{
             backgroundImage: "url(https://images.pexels.com/photos/1181274/pexels-photo-1181274.jpeg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
+          <Header/>
             
             <div className="absolute inset-0" />
           <div className="relative z-10 text-center space-y-8 px-4 max-w-6xl mx-auto">
@@ -90,15 +91,6 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Latest Jobs
-          </h2>
-          <Button variant="outline" className="gap-2">
-            View all jobs <ArrowRight size={16} />
-          </Button>
-        </div>
-        
         <JobFilters />
         <JobList />
         
