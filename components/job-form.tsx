@@ -74,7 +74,7 @@ export default function JobPostingForm() {
   }
 
   return (
-    <div className="max-w-6xl">
+    <div>
       <Card>
         <CardHeader>
           <CardTitle className=" font-semibold">Post a New Job</CardTitle>
