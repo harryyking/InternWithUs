@@ -81,7 +81,7 @@ export default function JobPostingForm() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 relative">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
                 name="position"
@@ -381,11 +381,11 @@ export default function JobPostingForm() {
                 )}
               />
 
-              <div className="absolute bottom-0 shadow-md border flex justify-center items-center bg-background min-h-20 p-4 w-full">
-                <Button type="submit" className="w-full" disabled={isLoading} size={"lg"}>
-                  {isLoading ? "Submitting..." : "Post Job"}
-                </Button>
-              </div>
+            <div className="fixed bottom-0 left-0 w-full shadow-md border flex justify-center items-center bg-background min-h-20 p-4">
+              <Button type="submit" className="w-full" disabled={isLoading} size={"lg"}>
+                {isLoading ? "Submitting..." : "Post Job"}
+              </Button>
+            </div>
 
             </form>
           </Form>
