@@ -29,45 +29,63 @@ export default function Home() {
       <Header/>
 
       {/* Hero Section */}
-      <div className="relative h-[600px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 dark:from-primary/10 dark:to-primary/5" />
-        <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
-        
-        <div className="relative z-10 text-center space-y-8 px-4 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white">
-            Find Your Dream Job
-            <span className="block text-primary mt-2">in Ghana</span>
-          </h1>
+     <div className="relative">
+        <div 
+          className="relative h-[600px] flex items-center justify-center overflow-hidden"
+          style={{
+            backgroundImage: "url(https://images.pexels.com/photos/1181274/pexels-photo-1181274.jpeg?auto=compress&cs=tinysrgb&w=600)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+            <div className="absolute inset-0 bg-black/60" />
           
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300">
-            Discover thousands of job opportunities with all the information you need.
-          </p>
-          
-          <div className="max-w-2xl mx-auto">
-            <div className="relative group">
-              <Input
-                type="search"
-                placeholder="Search jobs, companies, or keywords..."
-                className="w-full h-16 pl-14 pr-4 rounded-2xl text-lg bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border-2 border-gray-100 dark:border-gray-700 shadow-lg focus:ring-2 focus:ring-primary/20 transition-all duration-300"
-              />
-              <Search className="absolute left-5 top-5 text-gray-400 group-hover:text-primary transition-colors duration-200" />
-              <Button className="absolute right-3 top-3 rounded-xl" size="lg">
-                Search Jobs
-              </Button>
-            </div>
+          <div className="relative z-10 text-center space-y-8 px-4 max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-bold text-white">
+              Find Your Dream Job
+              <span className="block text-primary mt-2">in Ghana</span>
+            </h1>
             
-            <div className="flex gap-4 mt-4 justify-center text-sm text-gray-500 dark:text-gray-400">
-              <span>Popular:</span>
-              {["Remote", "Tech", "Marketing", "Design"].map((tag) => (
-                <button
-                  key={tag}
-                  className="hover:text-primary transition-colors duration-200"
-                >
-                  {tag}
-                </button>
-              ))}
+            <p className="text-lg md:text-xl text-gray-200">
+              Discover thousands of job opportunities with all the information you need.
+            </p>
+            
+            <div className="max-w-2xl mx-auto">
+              <div className="relative group">
+                <Input
+                  type="search"
+                  placeholder="Search jobs, companies, or keywords..."
+                  className="w-full h-16 pl-14 pr-4 rounded-2xl text-lg bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border-2 border-gray-100 dark:border-gray-700 shadow-lg focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                />
+                <Search className="absolute left-5 top-5 text-gray-400 group-hover:text-primary transition-colors duration-200" />
+                <Button className="absolute right-3 top-3 rounded-xl" size="lg">
+                  Search Jobs
+                </Button>
+              </div>
+              
+              <div className="flex gap-4 mt-4 justify-center text-sm text-gray-300">
+                <span>Popular:</span>
+                {["Remote", "Tech", "Marketing", "Design"].map((tag) => (
+                  <button
+                    key={tag}
+                    className="hover:text-primary transition-colors duration-200"
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg
+            viewBox="0 0 1440 120"
+            className="w-full h-[60px] fill-white dark:fill-gray-800 transform translate-y-1"
+            preserveAspectRatio="none"
+          >
+            <path d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,53.3C1248,53,1344,43,1392,37.3L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z" />
+          </svg>
         </div>
       </div>
 
