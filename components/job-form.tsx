@@ -381,7 +381,7 @@ export default function JobPostingForm() {
                 )}
               />
 
-              <div className="fixed bottom-0 flex justify-center items-center bg-background min-h-20 pt-4 pb-2 w-full">
+              <div className="fixed bottom-0 shadow-md border flex justify-center items-center bg-background min-h-20 pt-4 pb-2 w-full">
               <Button type="submit" className="w-full" disabled={isLoading} size={"lg"}>
                 {isLoading ? "Submitting..." : "Post Job"}
               </Button>
