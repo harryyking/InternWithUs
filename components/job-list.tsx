@@ -56,7 +56,7 @@ export default function JobList() {
                 className="w-10 h-10 md:w-12 md:h-12 rounded-full self-center md:self-start"
               />
               <div className="flex-1 w-full text-center md:text-left">
-                <div className="flex flex-col md:flex-row items-center gap-2 justify-center md:justify-start">
+                <div className="flex flex-row items-center gap-2 justify-start">
                   <h3 className="text-base md:text-lg font-semibold truncate max-w-full">
                     {job.title}
                   </h3>
@@ -66,10 +66,7 @@ export default function JobList() {
                     </Badge>
                   )}
                 </div>
-                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2">
-                  {job.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-2 justify-center md:justify-start">
+                <div className="flex flex-wrap gap-2 mt-2 justify-start items-center">
                   {job.tags.map((tag) => (
                     <Badge 
                       key={tag} 
