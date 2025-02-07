@@ -34,6 +34,7 @@ const jobs = [
     tags: ["Non Tech", "Content Writing"],
     salary: "$20-45/hr",
     isVerified: true,
+    createdAt: '2d'
   },
 ]
 
@@ -46,7 +47,8 @@ export default function JobList() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
-          className="w-full"
+          className="w-full relative"
+          whileHover={{ scale: 1.02 }}
         >
           <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow overflow-hidden">
             <div className="flex flex-row items-start gap-4">
@@ -66,7 +68,7 @@ export default function JobList() {
                     </Badge>
                   )}
                 </div>
-                <div className="flex flex-wrap gap-2 mt-2 justify-start items-center">
+                <div className="flex flex-row truncate/40 gap-2 mt-2 justify-start items-center">
                   {job.tags.map((tag) => (
                     <Badge 
                       key={tag} 
@@ -86,15 +88,19 @@ export default function JobList() {
                   )}
                 </div>
               </div>
-              {job.cta && (
-                <Button 
-                  variant={job.isAd ? "default" : "secondary"} 
-                  className="w-auto text-xs md:text-sm mt-2 md:mt-0"
-                >
-                  {job.cta}
-                </Button>
+              {job.createdAt && (
+                <p className="text-sm text-gray-500">{job.createdAt}</p>
               )}
             </div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 0.8 }}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2"
+            >
+              <Button variant="outline" className="opacity-0 hover:opacity-100 transition-opacity">
+                Apply
+              </Button>
+            </motion.div>
           </Card>
         </motion.div>
       ))}
