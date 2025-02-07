@@ -62,7 +62,7 @@ export const Tiptap = ({ onChange, value }: { onChange: (value: string) => void;
           <ListOrdered className="h-4 w-4" />
         </Button>
       </div>
-      <div className="bg-gray-50 h-[500px] overflow-y-auto">
+      <div className="bg-gray-50 h-[400px] overflow-y-auto">
         <EditorContent
           editor={editor}
           className="p-4 min-h-full prose prose-sm max-w-none focus-visible:outline-none"

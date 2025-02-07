@@ -77,7 +77,7 @@ export default function JobPostingForm() {
     <div className="max-w-5xl mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Post a New Job</CardTitle>
+          <CardTitle className=" font-semibold">Post a New Job</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -90,6 +90,20 @@ export default function JobPostingForm() {
                     <FormLabel>Job Title</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g. Senior React Developer" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+                <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Job Description</FormLabel>
+                    <FormControl>
+                      <Tiptap {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -318,19 +332,7 @@ export default function JobPostingForm() {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Job Description</FormLabel>
-                    <FormControl>
-                      <Tiptap {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              
 
               <FormField
                 control={form.control}
@@ -379,19 +381,22 @@ export default function JobPostingForm() {
                 )}
               />
 
+              <div className="fixed bottom-0 bg-background pt-4 pb-2">
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Submitting..." : "Post Job"}
               </Button>
+
+              </div>
             </form>
           </Form>
         </CardContent>
       </Card>
 
-      {preview && (
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle>Job Preview</CardTitle>
+            <CardTitle>Preview</CardTitle>
           </CardHeader>
+      {preview && (
           <CardContent>
             <h2 className="text-2xl font-semibold">{preview.position}</h2>
             <p className="text-sm text-gray-500">
@@ -425,9 +430,9 @@ export default function JobPostingForm() {
               <h3 className="font-semibold">Job Description:</h3>
               <div className="prose" dangerouslySetInnerHTML={{ __html: preview.description }} />
             </div>
-          </CardContent>
-        </Card>
+      </CardContent>
       )}
+    </Card>
     </div>
   )
 }
