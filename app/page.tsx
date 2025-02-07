@@ -26,9 +26,9 @@ const companies = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
-     
       {/* Hero Section */}
      <div className="relative">
+     <Header/>
      
         <div 
           className="relative h-[600px] flex flex-col items-center justify-center overflow-hidden"
@@ -38,15 +38,15 @@ export default function Home() {
             backgroundPosition: "center",
           }}
         >
-          <Header/>
+          
             
             <div className="absolute inset-0" />
           <div className="relative z-10 text-center space-y-8 px-4 max-w-6xl mx-auto">
             <h1 className="text-3xl md:text-6xl font-medium text-white">
-              Find a job <span className="block text-primary font-semibold mt-2">in Ghana</span>
+              Find a job <span className="text-primary font-semibold mt-2">in Ghana</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-200">
+            <p className="text-lg md:text-xl">
               Discover thousands of job opportunities with all the information you need.
             </p>
             
