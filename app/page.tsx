@@ -26,9 +26,10 @@ const companies = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
-      {/* Hero Section */}
      <div className="relative">
-     <Header/>
+     
+     <div>
+        <Header/>
      
         <div 
           className="relative h-[600px] flex flex-col items-center justify-center overflow-hidden"
@@ -74,6 +75,7 @@ export default function Home() {
                   </button>
                 ))}
               </div>
+            </div>
             </div>
           </div>
         </div>
