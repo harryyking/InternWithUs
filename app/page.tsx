@@ -26,8 +26,7 @@ const companies = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
-      <Header/>
-
+     
       {/* Hero Section */}
      <div className="relative">
         <div 
@@ -39,7 +38,7 @@ export default function Home() {
           }}
         >
             <div className="absolute inset-0" />
-          
+            <Header/>
           <div className="relative z-10 text-center space-y-8 px-4 max-w-6xl mx-auto">
             <h1 className="text-3xl md:text-6xl font-medium text-white">
               Find a job
