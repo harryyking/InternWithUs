@@ -74,7 +74,7 @@ export default function JobPostingForm() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-4xl">
       <Card>
         <CardHeader>
           <CardTitle className=" font-semibold">Post a New Job</CardTitle>
@@ -381,7 +381,7 @@ export default function JobPostingForm() {
                 )}
               />
 
-              <div className="fixed bottom-0 bg-background pt-4 pb-2">
+              <div className="fixed bottom-0 h-40 bg-background pt-4 pb-2 w-full">
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Submitting..." : "Post Job"}
               </Button>
