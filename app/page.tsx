@@ -6,6 +6,7 @@ import JobList from "@/components/job-list";
 import Newsletter from "@/components/newsletter";
 import { JobFilters } from "@/components/job-filter";
 import { motion } from 'framer-motion';
+import { Header } from '@/components/header';
 
 const statsData = [
   { icon: Briefcase, label: "Active Jobs", value: "2,400+" },
@@ -25,6 +26,8 @@ const companies = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
+      <Header/>
+
       {/* Hero Section */}
       <div className="relative h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 dark:from-primary/10 dark:to-primary/5" />
@@ -122,9 +125,6 @@ export default function Home() {
         <JobFilters />
         <JobList />
         
-        <div className="mt-16">
-          <Newsletter />
-        </div>
       </div>
     </main>
   );
