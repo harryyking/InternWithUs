@@ -93,7 +93,7 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 py-4">
         <JobFilters />
         <JobList />
         
