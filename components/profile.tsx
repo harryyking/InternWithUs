@@ -13,16 +13,16 @@ const Profile = () => {
             src=""
             alt=''
             />
-  </DropdownMenuTrigger>
-  <DropdownMenuContent>
-    <DropdownMenuLabel>Your Profile</DropdownMenuLabel>
-    <DropdownMenuSeparator />
-    <DropdownMenuItem>My Profile</DropdownMenuItem>
-    <DropdownMenuItem>Frontpage</DropdownMenuItem>
-    <DropdownMenuItem>Hire Talents</DropdownMenuItem>
-    <DropdownMenuItem>Jobs</DropdownMenuItem>
-  </DropdownMenuContent>
-</DropdownMenu>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Your Profile</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>My Profile</DropdownMenuItem>
+          <DropdownMenuItem>Frontpage</DropdownMenuItem>
+          <DropdownMenuItem>Hire Talents</DropdownMenuItem>
+          <DropdownMenuItem>Jobs</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
 
     </div>
