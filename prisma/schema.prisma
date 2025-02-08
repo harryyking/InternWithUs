@@ -46,6 +46,7 @@ model User {
   phone         String
   location      String
   portfolio     String?
+  skill          String[]
   role          UserRole    @default(JOBSEEKER)
   
   education     Education[]
@@ -53,7 +54,6 @@ model User {
   project       Project[]
   accounts      Account[]
   sessions      Session[]
-  skills        UserSkill[]
   notifications Notification[]
 
   createdAt     DateTime    @default(now())
@@ -72,40 +72,6 @@ model VerificationToken {
 }
 
 
-model Skill {
-  id          String      @id @default(cuid())
-  name        String      @unique
-  category    String
-  users       UserSkill[]
-  
-
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  @@index([category])
-}
-
-model UserSkill {
-  id          String    @id @default(cuid())
-  userId      String
-  skillId     String
-  level       SkillLevel
-  
-  user        User      @relation(fields: [userId], references: [id])
-  skill       Skill     @relation(fields: [skillId], references: [id])
-
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@unique([userId, skillId])
-}
-
-enum SkillLevel {
-  BEGINNER
-  INTERMEDIATE
-  ADVANCED
-  EXPERT
-}
 
 
 enum AlertFrequency {
