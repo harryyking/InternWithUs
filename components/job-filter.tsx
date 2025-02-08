@@ -61,7 +61,7 @@ export function JobFilters() {
   }
 
   return (
-    <div className="mb-8 space-y-4 sticky top-0">
+    <div className="mb-8 space-y-4 sticky top-0 z-40">
       <ScrollArea className="w-full whitespace-nowrap ">
         <div className="flex w-max space-x-4 p-2">
           {filterOptions.map((filter) => (
