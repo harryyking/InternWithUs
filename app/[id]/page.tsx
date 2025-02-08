@@ -13,7 +13,15 @@ const Page = () => {
 
   if (isEditMode) {
     return (
-      <div>
+      <div className='bg-gray-100'>
+          <div className="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden">
+            <img
+              src=''
+              alt="Banner"
+              className="w-full h-full object-cover"
+            />
+      
+          </div>
         <UserProfileForm />
       </div>
     );
@@ -34,7 +42,7 @@ const Page = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className='bg-gray-100'>
       {/* Banner */}
       <div className="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden">
         <img
@@ -53,7 +61,7 @@ const Page = () => {
       </div>
 
       {/* Profile Details */}
-      <Card className="mt-20">
+      <Card className="mt-8 max-w-4xl mx-auto">
         <CardContent className="p-6">
           {/* Name and Title */}
           <div className="text-center">
