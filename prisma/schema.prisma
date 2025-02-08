@@ -41,12 +41,17 @@ model User {
   id            String      @id @default(cuid())
   name          String?
   email         String      @unique
+  username      String      @unique
   emailVerified DateTime?   @map("email_verified")
   image         String?
   phone         String
   location      String
+  linkedin      String?
+  telegram      String?
+  instagram     String?
   portfolio     String?
   skill          String[]
+  bio           String
   role          UserRole    @default(JOBSEEKER)
   
   education     Education[]
@@ -167,10 +172,9 @@ model Education {
   location      String
   degree        String
   major         String
-  gpa           String?
-  description   String?
   startDate     DateTime
   endDate       DateTime?
+  isCurrently   Boolean   @default(false)
   
   user          User      @relation(fields: [userId], references: [id])
 }
@@ -183,7 +187,7 @@ model Work {
   location      String
   startDate     DateTime
   endDate       DateTime?
-  experience    String
+  isCurrently   Boolean   @default(false)
   
   user          User      @relation(fields: [userId], references: [id])
 }
@@ -194,7 +198,8 @@ model Project {
   name          String
   description   String
   link          String?
-  tools         String[]
-  
+  startDate     DateTime
+  endDate       DateTime?
+  isCurrently   Boolean   @default(false)
   user          User      @relation(fields: [userId], references: [id])
 }

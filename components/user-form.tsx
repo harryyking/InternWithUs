@@ -1,13 +1,15 @@
-"use client";
-import React, { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFieldArray } from "react-hook-form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { z } from "zod";
-import { Plus, Trash } from "lucide-react";
+"use client"
+import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm, useFieldArray } from "react-hook-form"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Checkbox } from "@/components/ui/checkbox"
+import { z } from "zod"
+import { Plus, Trash } from "lucide-react"
+import { updateEducation, updateProject, updateUserProfile, updateWork } from "@/actions/userAction"
 
 // Define schemas for individual entries
 const EducationSchema = z.object({
@@ -15,21 +17,32 @@ const EducationSchema = z.object({
   location: z.string().min(1, "Location is required"),
   degree: z.string().min(1, "Degree is required"),
   major: z.string().min(1, "Major is required"),
-});
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().optional(),
+  isCurrently: z.boolean().default(false),
+})
 
 const WorkSchema = z.object({
   company: z.string().min(1, "Company name is required"),
   location: z.string().min(1, "Location is required"),
   position: z.string().min(1, "Position is required"),
-  duration: z.string().min(1, "Duration is required"),
-});
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().optional(),
+  isCurrently: z.boolean().default(false),
+})
 
 const ProjectSchema = z.object({
   name: z.string().min(1, "Project name is required"),
   description: z.string().min(1, "Description is required"),
   link: z.string().url("Invalid URL").optional(),
-  duration: z.string().min(1, "Duration is required"),
-});
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().optional(),
+  isCurrently: z.boolean().default(false),
+})
+
+export type EducationInput = z.infer<typeof EducationSchema>
+export type WorkInput = z.infer<typeof WorkSchema>
+export type ProjectInput = z.infer<typeof ProjectSchema>
 
 // Define the main form schema
 const ProfileSchema = z.object({
@@ -37,15 +50,23 @@ const ProfileSchema = z.object({
   email: z.string().email("Invalid email address"),
   location: z.string().min(1, "Location is required"),
   portfolio: z.string().url("Invalid URL").optional(),
+  linkedin: z.string().url("Invalid URL").optional(),
+  instagram: z.string().url("Invalid URL").optional(),
+  facebook: z.string().url("Invalid URL").optional(),
+  bio: z.string(),
+  telegram: z.string().url("Invalid URL").optional(),
   education: z.array(EducationSchema),
   work: z.array(WorkSchema),
   projects: z.array(ProjectSchema),
-});
+})
 
-type ProfileFormValues = z.infer<typeof ProfileSchema>;
+export type ProfileFormValues = z.infer<typeof ProfileSchema>
 
-const UserProfileForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
+// Add this type definition at the top of the file, after the other type definitions
+type FormSection = "education" | "work" | "projects"
+
+const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
+  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileSchema),
@@ -54,11 +75,12 @@ const UserProfileForm = () => {
       email: "",
       location: "",
       portfolio: "",
+      bio: "",
       education: [],
       work: [],
       projects: [],
     },
-  });
+  })
 
   const {
     fields: educationFields,
@@ -67,7 +89,7 @@ const UserProfileForm = () => {
   } = useFieldArray({
     control: form.control,
     name: "education",
-  });
+  })
 
   const {
     fields: workFields,
@@ -76,7 +98,7 @@ const UserProfileForm = () => {
   } = useFieldArray({
     control: form.control,
     name: "work",
-  });
+  })
 
   const {
     fields: projectFields,
@@ -85,38 +107,112 @@ const UserProfileForm = () => {
   } = useFieldArray({
     control: form.control,
     name: "projects",
-  });
+  })
 
   const onSubmit = async (data: ProfileFormValues) => {
     try {
-      setIsLoading(true);
-      console.log("Form submitted:", data);
-      // Add your server action here
+      setIsLoading(true)
+
+      await updateUserProfile(id, {
+        name: data.name,
+        email: data.email,
+        location: data.location,
+        portfolio: data.portfolio,
+        linkedin: data.linkedin,
+        instagram: data.instagram,
+        facebook: data.facebook,
+        bio: data.bio,
+        telegram: data.telegram,
+      })
+
+      await Promise.all([
+        ...data.education.map((edu) => updateEducation(id, edu)),
+        ...data.work.map((work) => updateWork(id, work)),
+        ...data.projects.map((project) => updateProject(id, project)),
+      ])
+
+      // Add a success message or notification here
+      console.log("Profile updated successfully")
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error updating profile:", error)
+      // Add an error message or notification here
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
+
+  // Update the renderDurationFields function
+  const renderDurationFields = (index: number, basePath: FormSection) => (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name={`${basePath}.${index}.startDate` as const}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Start Date</FormLabel>
+              <FormControl>
+                <Input type="month" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {!form.watch(`${basePath}.${index}.isCurrently` as const) && (
+          <FormField
+            control={form.control}
+            name={`${basePath}.${index}.endDate` as const}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>End Date</FormLabel>
+                <FormControl>
+                  <Input type="month" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+      </div>
+
+      <FormField
+        control={form.control}
+        name={`${basePath}.${index}.isCurrently` as const}
+        render={({ field }) => (
+          <FormItem className="flex items-center space-x-2">
+            <FormControl>
+              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+            </FormControl>
+            <FormLabel className="mt-0">
+              {basePath === "education" && "Currently Studying Here"}
+              {basePath === "work" && "Currently Working Here"}
+              {basePath === "projects" && "Ongoing Project"}
+            </FormLabel>
+          </FormItem>
+        )}
+      />
+    </div>
+  )
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto p-6">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Personal Information */}
+          {/* Personal Information Card - remains the same */}
           <Card>
             <CardHeader>
               <CardTitle>Personal Information</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent>
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} />
+                      <Input placeholder="Your Name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -129,7 +225,7 @@ const UserProfileForm = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="john@example.com" {...field} />
+                      <Input type="email" placeholder="Your Email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -142,7 +238,7 @@ const UserProfileForm = () => {
                   <FormItem>
                     <FormLabel>Location</FormLabel>
                     <FormControl>
-                      <Input placeholder="City, Country" {...field} />
+                      <Input placeholder="Your Location" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -153,9 +249,74 @@ const UserProfileForm = () => {
                 name="portfolio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Portfolio URL</FormLabel>
+                    <FormLabel>Portfolio</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://yourportfolio.com" {...field} />
+                      <Input type="url" placeholder="Your Portfolio URL" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="linkedin"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>LinkedIn</FormLabel>
+                    <FormControl>
+                      <Input type="url" placeholder="Your LinkedIn URL" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="instagram"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Instagram</FormLabel>
+                    <FormControl>
+                      <Input type="url" placeholder="Your Instagram URL" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="facebook"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Facebook</FormLabel>
+                    <FormControl>
+                      <Input type="url" placeholder="Your Facebook URL" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="telegram"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Telegram</FormLabel>
+                    <FormControl>
+                      <Input type="url" placeholder="Your Telegram URL" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bio</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Your Bio" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -164,7 +325,7 @@ const UserProfileForm = () => {
             </CardContent>
           </Card>
 
-          {/* Education */}
+          {/* Education Card */}
           <Card>
             <CardHeader>
               <CardTitle>Education</CardTitle>
@@ -172,6 +333,7 @@ const UserProfileForm = () => {
             <CardContent className="space-y-4">
               {educationFields.map((field, index) => (
                 <div key={field.id} className="space-y-4 border p-4 rounded-lg">
+                  {/* Existing education fields */}
                   <FormField
                     control={form.control}
                     name={`education.${index}.institution`}
@@ -192,7 +354,7 @@ const UserProfileForm = () => {
                       <FormItem>
                         <FormLabel>Location</FormLabel>
                         <FormControl>
-                          <Input placeholder="City, Country" {...field} />
+                          <Input placeholder="Location" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -205,7 +367,7 @@ const UserProfileForm = () => {
                       <FormItem>
                         <FormLabel>Degree</FormLabel>
                         <FormControl>
-                          <Input placeholder="Bachelor of Science" {...field} />
+                          <Input placeholder="Degree" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -218,17 +380,18 @@ const UserProfileForm = () => {
                       <FormItem>
                         <FormLabel>Major</FormLabel>
                         <FormControl>
-                          <Input placeholder="Computer Science" {...field} />
+                          <Input placeholder="Major" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    onClick={() => removeEducation(index)}
-                  >
+                  {/* Other existing fields */}
+
+                  {/* Duration fields */}
+                  {renderDurationFields(index, "education")}
+
+                  <Button type="button" variant="destructive" onClick={() => removeEducation(index)}>
                     <Trash className="w-4 h-4 mr-2" /> Remove
                   </Button>
                 </div>
@@ -242,6 +405,9 @@ const UserProfileForm = () => {
                     location: "",
                     degree: "",
                     major: "",
+                    startDate: "",
+                    endDate: "",
+                    isCurrently: false,
                   })
                 }
               >
@@ -250,7 +416,7 @@ const UserProfileForm = () => {
             </CardContent>
           </Card>
 
-          {/* Work Experience */}
+          {/* Work Experience Card */}
           <Card>
             <CardHeader>
               <CardTitle>Work Experience</CardTitle>
@@ -258,6 +424,7 @@ const UserProfileForm = () => {
             <CardContent className="space-y-4">
               {workFields.map((field, index) => (
                 <div key={field.id} className="space-y-4 border p-4 rounded-lg">
+                  {/* Existing work fields */}
                   <FormField
                     control={form.control}
                     name={`work.${index}.company`}
@@ -278,7 +445,7 @@ const UserProfileForm = () => {
                       <FormItem>
                         <FormLabel>Location</FormLabel>
                         <FormControl>
-                          <Input placeholder="City, Country" {...field} />
+                          <Input placeholder="Location" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -291,30 +458,18 @@ const UserProfileForm = () => {
                       <FormItem>
                         <FormLabel>Position</FormLabel>
                         <FormControl>
-                          <Input placeholder="Senior Developer" {...field} />
+                          <Input placeholder="Position" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name={`work.${index}.duration`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Duration</FormLabel>
-                        <FormControl>
-                          <Input placeholder="2 years" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    onClick={() => removeWork(index)}
-                  >
+                  {/* Other existing fields */}
+
+                  {/* Duration fields */}
+                  {renderDurationFields(index, "work")}
+
+                  <Button type="button" variant="destructive" onClick={() => removeWork(index)}>
                     <Trash className="w-4 h-4 mr-2" /> Remove
                   </Button>
                 </div>
@@ -327,7 +482,9 @@ const UserProfileForm = () => {
                     company: "",
                     location: "",
                     position: "",
-                    duration: "",
+                    startDate: "",
+                    endDate: "",
+                    isCurrently: false,
                   })
                 }
               >
@@ -336,7 +493,7 @@ const UserProfileForm = () => {
             </CardContent>
           </Card>
 
-          {/* Projects */}
+          {/* Projects Card */}
           <Card>
             <CardHeader>
               <CardTitle>Projects</CardTitle>
@@ -344,6 +501,7 @@ const UserProfileForm = () => {
             <CardContent className="space-y-4">
               {projectFields.map((field, index) => (
                 <div key={field.id} className="space-y-4 border p-4 rounded-lg">
+                  {/* Existing project fields */}
                   <FormField
                     control={form.control}
                     name={`projects.${index}.name`}
@@ -364,7 +522,7 @@ const UserProfileForm = () => {
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Input placeholder="Brief project description" {...field} />
+                          <Input placeholder="Description" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -375,32 +533,20 @@ const UserProfileForm = () => {
                     name={`projects.${index}.link`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Project Link</FormLabel>
+                        <FormLabel>Link</FormLabel>
                         <FormControl>
-                          <Input placeholder="https://project-url.com" {...field} />
+                          <Input type="url" placeholder="Link" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name={`projects.${index}.duration`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Duration</FormLabel>
-                        <FormControl>
-                          <Input placeholder="6 months" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    onClick={() => removeProject(index)}
-                  >
+                  {/* Other existing fields */}
+
+                  {/* Duration fields */}
+                  {renderDurationFields(index, "projects")}
+
+                  <Button type="button" variant="destructive" onClick={() => removeProject(index)}>
                     <Trash className="w-4 h-4 mr-2" /> Remove
                   </Button>
                 </div>
@@ -413,7 +559,9 @@ const UserProfileForm = () => {
                     name: "",
                     description: "",
                     link: "",
-                    duration: "",
+                    startDate: "",
+                    endDate: "",
+                    isCurrently: false,
                   })
                 }
               >
@@ -431,7 +579,8 @@ const UserProfileForm = () => {
         </form>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default UserProfileForm;
+export default UserProfileForm
+

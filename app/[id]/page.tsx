@@ -7,7 +7,12 @@ import { MapPin, Globe, Linkedin, Mail, Building, Calendar, ExternalLink } from 
 import { useSearchParams } from 'next/navigation';
 import UserProfileForm from '@/components/user-form';
 
-const Page = () => {
+type ParamsProps = {
+  params: {
+    id: string;
+  };
+};
+const Page = ({params}: ParamsProps) => {
   const searchParams = useSearchParams();
   const isEditMode = searchParams.get("edit") === "true";
 
@@ -33,7 +38,7 @@ const Page = () => {
       
           </div>
 
-        <UserProfileForm />
+        <UserProfileForm id={params.id} />
       </div>
     );
   }
