@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Mail, LockKeyhole, ArrowRight, Loader2, Store } from 'lucide-react';
 
 type RegisterProps = {
-  id: string; // Define the id prop
+  id: string | null; // Define the id prop
 };
 
 const Register = ({id}: RegisterProps) => {
@@ -45,7 +45,7 @@ const Register = ({id}: RegisterProps) => {
 
   const handleSignInGoogle = async() => {
     setGoogleIsLoading(true);
-    const signInResult = await signIn("google", {callbackUrl: '/store'});
+    const signInResult = await signIn("google", {callbackUrl: `/${id}?edit=true`});
     if (!signInResult) {
       setGoogleIsLoading(false);
       return;

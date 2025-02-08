@@ -1,8 +1,14 @@
+"use client"
 import React from 'react'
 import Register from '@/components/register'
 import { Header } from '@/components/header'
+import { useSearchParams } from 'next/navigation'
 
 const page = () => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id"); 
+
+
   return (
     <div 
     className="relative min-h-screen overflow-hidden"
@@ -13,7 +19,7 @@ const page = () => {
           }}
     >
       <Header/>
-      <Register id={''}/>
+      <Register id={id}/>
     </div>
   )
 }
