@@ -88,65 +88,24 @@ const Page = () => {
       {/* Profile Details */}
       <Card className="mt-8 max-w-4xl mx-auto">
         <CardContent className="p-6">
-          {/* Name and Title */}
-          <div className="text-center">
-            <h1 className="text-2xl font-bold">{user.name}</h1>
-            <p className="text-gray-600">{user.title}</p>
+          <div className='flex border-b border-gray-300 items-center justify-around'>
+              <p>Name</p>
+              <p>{user.name}</p>
           </div>
 
-          {/* Location and Social Links */}
-          <div className="flex flex-wrap justify-center gap-4 mt-4">
-            <div className="flex items-center text-gray-600">
-              <MapPin className="w-4 h-4 mr-2" />
-              <span>{user.location}</span>
-            </div>
-            <a
-              href={user.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center text-blue-600 hover:underline"
-            >
-              <Globe className="w-4 h-4 mr-2" />
-              <span>Website</span>
-            </a>
-            <a
-              href={user.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center text-blue-600 hover:underline"
-            >
-              <Linkedin className="w-4 h-4 mr-2" />
-              <span>LinkedIn</span>
-            </a>
-            <a
-              href={`mailto:${user.email}`}
-              className="flex items-center text-blue-600 hover:underline"
-            >
-              <Mail className="w-4 h-4 mr-2" />
-              <span>Email</span>
-            </a>
+          <div className='flex border-b border-gray-300 items-center justify-around'>
+              <p>Name</p>
+              <p>{user.name}</p>
           </div>
 
-          {/* Company */}
-          <div className="flex items-center justify-center mt-4 text-gray-600">
-            <Building className="w-4 h-4 mr-2" />
-            <span>{user.company}</span>
+          <div className='flex border-b border-gray-300 items-center justify-around'>
+              <p>Name</p>
+              <p>{user.name}</p>
           </div>
 
-          {/* Skills */}
-          <div className="flex flex-wrap justify-center gap-2 mt-6">
-            {user.skills.map((skill, index) => (
-              <Badge key={index} variant="outline">
-                {skill}
-              </Badge>
-            ))}
-          </div>
-
-          {/* Edit Button */}
-          <div className="flex justify-center mt-6">
-            <Button variant="outline">
-              <a href="?edit=true">Edit Profile</a>
-            </Button>
+          <div className='flex border-b border-gray-300 items-center justify-around'>
+              <p>Name</p>
+              <p>{user.name}</p>
           </div>
         </CardContent>
       </Card>
