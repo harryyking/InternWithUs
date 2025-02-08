@@ -6,7 +6,7 @@ import Link from 'next/link'
 const page = () => {
   return (
    <>
-   <div className='bg-background p-2 h-24 flex justify-center items-center '>
+   <div className='bg-background p-2 h-24 flex justify-center items-center border border-b '>
     <Link href="/">
       Work Dey Here
     </Link>
