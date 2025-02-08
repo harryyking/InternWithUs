@@ -1,13 +1,8 @@
-"use client"
 import React from 'react'
 import Register from '@/components/register'
 import { Header } from '@/components/header'
-import { useSearchParams } from 'next/navigation'
 
 const page = () => {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id"); 
-
 
   return (
     <div 
@@ -19,7 +14,7 @@ const page = () => {
           }}
     >
       <Header/>
-      <Register id={id}/>
+      <Register/>
     </div>
   )
 }

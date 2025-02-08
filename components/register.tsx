@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, LockKeyhole, ArrowRight, Loader2, Store } from 'lucide-react';
 
-type RegisterProps = {
-  id: string | null; // Define the id prop
-};
 
-const Register = ({id}: RegisterProps) => {
+
+const Register = () => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [googleIsLoading, setGoogleIsLoading] = useState(false);
