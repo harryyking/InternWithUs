@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Mail, LockKeyhole, ArrowRight, Loader2, Store } from 'lucide-react';
 
 
-const Register = () => {
+const Register = ({id}: {id: string}) => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [googleIsLoading, setGoogleIsLoading] = useState(false);
@@ -25,7 +25,7 @@ const Register = () => {
     setIsLoading(true);
     const signInResult = await signIn("email", {
       email,
-      callbackUrl: '/',
+      callbackUrl: `/${id}?edit=true`,
       redirect: false,
     });
     setIsLoading(false);
@@ -34,7 +34,7 @@ const Register = () => {
       setEmail("");
      
 
-      router.push("/"); // Redirect to /store after showing the success toast
+      router.push(`/${id}?edit=true`); // Redirect to /store after showing the success toast
     } else {
 
     }
@@ -49,7 +49,7 @@ const Register = () => {
     }
 
     if(signInResult.ok) {
-      router.push("/");
+      router.push(`/${id}?edit=true`);
 
 
     }

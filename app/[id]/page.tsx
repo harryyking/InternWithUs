@@ -98,7 +98,7 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
   if (isEditMode) {
     return (
       <div className="bg-gray-50 min-h-screen">
-        <div className="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden">
+        <div className="relative h-64 bg-gray-200 rounded-t-lg overflow-hidden">
           <img src={user.bannerImage || "/placeholder.svg"} alt="Banner" className="w-full h-full object-cover" />
           <div className="absolute bottom-0 left-0 right-0">
             <svg
@@ -122,7 +122,7 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
   return (
     <div className="bg-gray-50 min-h-screen pb-12">
       {/* Banner */}
-      <div className="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden">
+      <div className="relative h-64 bg-gray-200 rounded-t-lg overflow-hidden">
         <img src={user.bannerImage || "/placeholder.svg"} alt="Banner" className="w-full h-full object-cover" />
         <div className="absolute bottom-0 left-0 right-0">
           <svg

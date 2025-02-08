@@ -1,10 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from "@/components/ui/dropdown-menu"
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 
 
 const Profile = () => {
+  const session = getServerSession(authOptions)
   return (
     <div>
         <DropdownMenu>
