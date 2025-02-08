@@ -13,7 +13,7 @@ const Page = () => {
 
   if (isEditMode) {
     return (
-      <div className='bg-gray-100'>
+      <div className='bg-gray-50'>
           <div className="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden">
             <img
               src='https://images.pexels.com/photos/1181274/pexels-photo-1181274.jpeg'
@@ -53,7 +53,7 @@ const Page = () => {
   };
 
   return (
-    <div className='bg-gray-100'>
+    <div className='bg-gray-50'>
       {/* Banner */}
       <div className="relative h-48 bg-gray-200 rounded-t-lg overflow-hidden">
         <img
