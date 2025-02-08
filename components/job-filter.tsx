@@ -88,6 +88,21 @@ export function JobFilters() {
             </DropdownMenu>
           ))}
         </div>
+
+     
+
+        <div className="flex w-max space-x-2 p-4">
+          {categories.map(({ icon, label }) => (
+            <Badge
+              key={label}
+              variant="outline"
+              className="gap-1 text-sm cursor-pointer transition-colors hover:bg-secondary"
+              onClick={() => handleFilterSelect(label)}
+            >
+              {icon} {label}
+            </Badge>
+          ))}
+        </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
@@ -106,22 +121,6 @@ export function JobFilters() {
           </Badge>
         ))}
       </div>
-
-      <ScrollArea className="w-full whitespace-nowrap rounded-md border">
-        <div className="flex w-max space-x-2 p-4">
-          {categories.map(({ icon, label }) => (
-            <Badge
-              key={label}
-              variant="outline"
-              className="gap-1 text-sm cursor-pointer transition-colors hover:bg-secondary"
-              onClick={() => handleFilterSelect(label)}
-            >
-              {icon} {label}
-            </Badge>
-          ))}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
     </div>
   )
 }
