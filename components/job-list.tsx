@@ -50,7 +50,7 @@ export default function JobList() {
           className="w-full relative"
           whileHover={{ scale: 1.02 }}
         >
-          <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow overflow-hidden bg-white">
+          <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow overflow-hidden bg-background">
             <div className="flex flex-row items-start gap-4">
               <img
                 src={job.logo || "/placeholder.svg"}

@@ -16,6 +16,10 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4">
+          <Link href="/auth">
+          <Button variant={"secondary"}>Log in</Button>
+          </Link>
+          
           <Link href="/jobs">
           <Button>Post job</Button>
           </Link>
