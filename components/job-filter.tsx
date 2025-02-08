@@ -62,8 +62,8 @@ export function JobFilters() {
 
   return (
     <div className="mb-8 space-y-4 sticky top-0">
-      <ScrollArea className="w-full whitespace-nowrap p-2">
-        <div className="flex w-max space-x-4">
+      <ScrollArea className="w-full whitespace-nowrap ">
+        <div className="flex w-max space-x-4 p-2">
           {filterOptions.map((filter) => (
             <DropdownMenu key={filter.label}>
               <DropdownMenuTrigger asChild>
@@ -91,7 +91,7 @@ export function JobFilters() {
 
      
 
-        <div className="flex w-max space-x-2">
+        <div className="flex w-max space-x-2 p-2">
           {categories.map(({ icon, label }) => (
             <Badge
               key={label}

@@ -17,10 +17,10 @@ const Profile = () => {
   <DropdownMenuContent>
     <DropdownMenuLabel>Your Profile</DropdownMenuLabel>
     <DropdownMenuSeparator />
-    <DropdownMenuItem>Profile</DropdownMenuItem>
-    <DropdownMenuItem>Billing</DropdownMenuItem>
-    <DropdownMenuItem>Team</DropdownMenuItem>
-    <DropdownMenuItem>Subscription</DropdownMenuItem>
+    <DropdownMenuItem>My Profile</DropdownMenuItem>
+    <DropdownMenuItem>Frontpage</DropdownMenuItem>
+    <DropdownMenuItem>Hire Talents</DropdownMenuItem>
+    <DropdownMenuItem>Jobs</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 
