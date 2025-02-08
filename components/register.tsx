@@ -8,8 +8,11 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Mail, LockKeyhole, ArrowRight, Loader2, Store } from 'lucide-react';
 
+type RegisterProps = {
+  id: string; // Define the id prop
+};
 
-const Register = ({id}: {id: string}) => {
+const Register = ({id}: RegisterProps) => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [googleIsLoading, setGoogleIsLoading] = useState(false);

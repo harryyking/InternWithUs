@@ -13,7 +13,7 @@ const page = () => {
           }}
     >
       <Header/>
-      <Register/>
+      <Register id={''}/>
     </div>
   )
 }
