@@ -1,8 +1,10 @@
 "use client"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import { CheckCircle, ExternalLink } from "lucide-react"
 
 const jobs = [
   {
@@ -20,7 +22,8 @@ const jobs = [
     company: "LinkedIn Headshots",
     logo: "/placeholder.svg?height=50&width=50",
     title: "Get Professional LinkedIn Headshots",
-    description: "No studio needed – create perfect headshots from your laptop or phone. Get noticed 230% more by recruiters!",
+    description:
+      "No studio needed – create perfect headshots from your laptop or phone. Get noticed 230% more by recruiters!",
     tags: ["Photography", "Professional"],
     cta: "Get headshots",
     isAd: true,
@@ -34,76 +37,99 @@ const jobs = [
     tags: ["Non Tech", "Content Writing"],
     salary: "$20-45/hr",
     isVerified: true,
-    createdAt: '2d'
+    createdAt: "2d",
   },
 ]
 
 export default function JobList() {
+  const [expandedJob, setExpandedJob] = useState<number | null>(null)
+
   return (
-    <div className="space-y-4">
-      {jobs.map((job, index) => (
-        <motion.div
-          key={job.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
-          className="w-full relative"
-          whileHover={{ scale: 1.02 }}
-        >
-          <Card className="p-4 md:p-6 hover:shadow-lg transition-shadow overflow-hidden bg-background">
-            <div className="flex flex-row items-start gap-4">
-              <img
-                src={job.logo || "/placeholder.svg"}
-                alt={`${job.company} logo`}
-                className="w-10 h-10 md:w-12 md:h-12 rounded-full self-center md:self-start"
-              />
-              <div className="flex-1 w-full text-center md:text-left">
-                <div className="flex flex-row items-center gap-2 justify-start">
-                  <h3 className="text-base md:text-lg font-semibold truncate max-w-full">
-                    {job.title}
-                  </h3>
-                  {job.isVerified && (
-                    <Badge variant="secondary" className="text-xs md:text-sm">
-                      Verified
-                    </Badge>
-                  )}
-                </div>
-                <div className="flex flex-row truncate/40 gap-2 mt-2 justify-start items-center">
-                  {job.tags.map((tag) => (
-                    <Badge 
-                      key={tag} 
-                      variant="outline" 
-                      className="text-[10px] md:text-xs"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                  {job.salary && (
-                    <Badge 
-                      variant="secondary" 
-                      className="text-[10px] md:text-xs"
-                    >
-                      {job.salary}
-                    </Badge>
-                  )}
+    <div className="space-y-4 max-w-3xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6">Job Listings</h2>
+      <AnimatePresence>
+        {jobs.map((job, index) => (
+          <motion.div
+            key={job.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ delay: index * 0.1 }}
+            className="w-full relative"
+          >
+            <Card
+              className={`p-4 md:p-6 transition-all duration-300 ${
+                job.isAd
+                  ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20"
+                  : "bg-background"
+              } ${expandedJob === job.id ? "shadow-lg" : "hover:shadow-md"}`}
+            >
+              <div className="flex flex-col md:flex-row items-start gap-4">
+                <img
+                  src={job.logo || "/placeholder.svg"}
+                  alt={`${job.company} logo`}
+                  className="w-16 h-16 rounded-full object-cover"
+                />
+                <div className="flex-1 w-full">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 justify-between">
+                    <div>
+                      <h3 className="text-lg md:text-xl font-semibold">{job.title}</h3>
+                      <p className="text-sm text-muted-foreground">{job.company}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {job.isVerified && (
+                        <Badge variant="secondary" className="text-xs">
+                          <CheckCircle className="w-3 h-3 mr-1" />
+                          Verified
+                        </Badge>
+                      )}
+                      {job.createdAt && <p className="text-sm text-muted-foreground">{job.createdAt}</p>}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {job.tags.map((tag) => (
+                      <Badge key={tag} variant="outline" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                    {job.salary && (
+                      <Badge variant="secondary" className="text-xs">
+                        {job.salary}
+                      </Badge>
+                    )}
+                  </div>
+                  <AnimatePresence>
+                    {expandedJob === job.id && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="text-sm mt-2 text-muted-foreground"
+                      >
+                        {job.description}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
-              {job.createdAt && (
-                <p className="text-sm text-gray-500">{job.createdAt}</p>
-              )}
-            </div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 0.8 }}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2"
-            >
-              <Button className="opacity-30 hover:opacity-100 transition-opacity">
-                Apply
-              </Button>
-            </motion.div>
-          </Card>
-        </motion.div>
-      ))}
+              <div className="mt-4 flex justify-between items-center">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setExpandedJob(expandedJob === job.id ? null : job.id)}
+                >
+                  {expandedJob === job.id ? "Less info" : "More info"}
+                </Button>
+                <Button className="ml-auto">
+                  {job.isAd ? job.cta : "Apply"}
+                  {job.isAd && <ExternalLink className="w-4 h-4 ml-2" />}
+                </Button>
+              </div>
+            </Card>
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   )
 }
+
