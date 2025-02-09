@@ -2,12 +2,11 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Briefcase, MapPin } from "lucide-react"
 
 // Mock data for job seekers
 const jobSeekers = [
@@ -16,7 +15,6 @@ const jobSeekers = [
     name: "Alice Johnson",
     title: "Full Stack Developer",
     skills: ["React", "Node.js", "Python", "MongoDB"],
-    experience: "5 years",
     location: "San Francisco, CA",
     avatar: "/placeholder.svg?height=400&width=400",
   },
@@ -25,7 +23,6 @@ const jobSeekers = [
     name: "Bob Smith",
     title: "UX Designer",
     skills: ["Figma", "Adobe XD", "Sketch", "User Research"],
-    experience: "3 years",
     location: "New York, NY",
     avatar: "/placeholder.svg?height=400&width=400",
   },
@@ -34,7 +31,6 @@ const jobSeekers = [
     name: "Charlie Brown",
     title: "Data Scientist",
     skills: ["Python", "R", "Machine Learning", "SQL"],
-    experience: "4 years",
     location: "Seattle, WA",
     avatar: "/placeholder.svg?height=400&width=400",
   },
@@ -43,7 +39,6 @@ const jobSeekers = [
     name: "Diana Prince",
     title: "DevOps Engineer",
     skills: ["Docker", "Kubernetes", "AWS", "CI/CD"],
-    experience: "6 years",
     location: "Austin, TX",
     avatar: "/placeholder.svg?height=400&width=400",
   },
@@ -60,28 +55,31 @@ const HireTalents: React.FC = () => {
   )
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <section className="py-16 bg-rose-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-4 text-gray-800">Discover Top Talents</h2>
-        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-4 text-rose-900">🌟 Discover Top Talents</h2>
+        <p className="text-center text-rose-700 mb-8 max-w-2xl mx-auto">
           Find the perfect candidate for your team from our pool of highly skilled professionals.
         </p>
         <div className="relative max-w-md mx-auto mb-12">
           <Input
             type="text"
             placeholder="Search by name, skill, or job title"
-            className="pl-10 pr-4 py-2 w-full"
+            className="pl-10 pr-4 py-2 w-full border-rose-300 focus:border-rose-500 focus:ring-rose-500"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-rose-400">🔍</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredJobSeekers.map((seeker) => (
-            <Card key={seeker.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 bg-white">
-              <CardHeader className="p-0">
-                <div className="relative h-48 bg-gradient-to-r from-blue-400 to-indigo-500">
-                  <Avatar className="absolute left-4 bottom-0 transform translate-y-1/2 h-24 w-24 border-4 border-white">
+            <Card
+              key={seeker.id}
+              className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white border-rose-200"
+            >
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <Avatar className="h-16 w-16 mr-4">
                     <AvatarImage src={seeker.avatar} alt={seeker.name} />
                     <AvatarFallback>
                       {seeker.name
@@ -90,27 +88,25 @@ const HireTalents: React.FC = () => {
                         .join("")}
                     </AvatarFallback>
                   </Avatar>
+                  <div>
+                    <h3 className="text-lg font-semibold text-rose-900">{seeker.name}</h3>
+                    <p className="text-rose-600">{seeker.title}</p>
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-16 pb-6">
-                <CardTitle className="text-xl font-semibold mb-1">{seeker.name}</CardTitle>
-                <p className="text-gray-600 mb-3 flex items-center">
-                  <Briefcase size={16} className="mr-1" /> {seeker.title}
+                <p className="text-rose-700 mb-4 flex items-center">
+                  <span className="mr-2">📍</span> {seeker.location}
                 </p>
-                <p className="text-gray-600 mb-4 flex items-center">
-                  <MapPin size={16} className="mr-1" /> {seeker.location}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {seeker.skills.map((skill, index) => (
-                    <Badge key={index} variant="secondary" className="bg-blue-100 text-blue-800">
-                      {skill}
-                    </Badge>
-                  ))}
+                <div className="mb-4">
+                  <h4 className="text-sm font-semibold text-rose-800 mb-2">Skills:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {seeker.skills.map((skill, index) => (
+                      <Badge key={index} variant="secondary" className="bg-rose-100 text-rose-800">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">Experience: {seeker.experience}</p>
-                <Button className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 transition-all duration-300">
-                  View Profile
-                </Button>
+                <Button className="w-full bg-rose-500 hover:bg-rose-600 text-white">View Profile</Button>
               </CardContent>
             </Card>
           ))}
