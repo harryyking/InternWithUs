@@ -69,7 +69,7 @@ const ProfileSchema = z.object({
 export type ProfileFormValues = z.infer<typeof ProfileSchema>
 
 // Add this type definition at the top of the file, after the other type definitions
-type FormSection = "education" | "work" | "projects" | "skills"
+type FormSection = "education" | "work" | "projects" 
 
 const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -162,7 +162,6 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
 
   // Update the renderDurationFields function
   const renderDurationFields = (index: number, basePath: FormSection) => {
-    if (basePath === "skills") return null // Skills don't have duration fields
 
     return (
       <div className="space-y-4">
@@ -172,7 +171,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
             name={`${basePath}.${index}.startDate` as const}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Start Date</FormLabel>
+                <FormLabel>🗓️ Start Date</FormLabel>
                 <FormControl>
                   <Input type="month" {...field} />
                 </FormControl>
@@ -187,7 +186,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
               name={`${basePath}.${index}.endDate` as const}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>End Date</FormLabel>
+                  <FormLabel>🏁 End Date</FormLabel>
                   <FormControl>
                     <Input type="month" {...field} />
                   </FormControl>
@@ -207,9 +206,9 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
               </FormControl>
               <FormLabel className="mt-0">
-                {basePath === "education" && "Currently Studying Here"}
-                {basePath === "work" && "Currently Working Here"}
-                {basePath === "projects" && "Ongoing Project"}
+                {basePath === "education" && "🎓 Currently Studying Here"}
+                {basePath === "work" && "💼 Currently Working Here"}
+                {basePath === "projects" && "🚧 Ongoing Project"}
               </FormLabel>
             </FormItem>
           )}
@@ -217,7 +216,6 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
       </div>
     )
   }
-
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto p-6">
@@ -234,11 +232,14 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>👤 Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Name" {...field} />
+                      <Input placeholder="Enter your full name" {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">
+                      Your legal name as it appears on official documents.
+                    </p>
                   </FormItem>
                 )}
               />
@@ -247,18 +248,19 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>📧 Email Address</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="Your Email" {...field} />
+                      <Input type="email" placeholder="your.email@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">
+                      Your primary email for account-related communications.
+                    </p>
                   </FormItem>
                 )}
               />
-
-              {/* Image Upload */}
               <div className="space-y-2">
-                <p className="font-semibold text-sm">Logo</p>
+                <p className="font-semibold text-sm">🖼️ Logo</p>
                 <UploadDropzone
                   className="h-52 p-4"
                   endpoint="userProfile"
@@ -274,11 +276,12 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     setIsUploading(false)
                   }}
                 />
+                <p className="text-sm text-muted-foreground">
+                  Upload a logo or profile picture (recommended size: 200x200px).
+                </p>
               </div>
-
-              {/* Image Upload */}
               <div className="space-y-2">
-                <p className="font-semibold text-sm">Banner Photo</p>
+                <p className="font-semibold text-sm">🏞️ Banner Photo</p>
                 <UploadDropzone
                   className="h-52 p-4"
                   endpoint="userProfile"
@@ -294,18 +297,21 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     setIsUploading(false)
                   }}
                 />
+                <p className="text-sm text-muted-foreground">
+                  Upload a banner image for your profile (recommended size: 1500x500px).
+                </p>
               </div>
-
               <FormField
                 control={form.control}
                 name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Location</FormLabel>
+                    <FormLabel>📍 Location</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Location" {...field} />
+                      <Input placeholder="City, Country" {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">Your current city and country of residence.</p>
                   </FormItem>
                 )}
               />
@@ -314,11 +320,12 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="portfolio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Portfolio</FormLabel>
+                    <FormLabel>🌐 Portfolio Website</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="Your Portfolio URL" {...field} />
+                      <Input type="url" placeholder="https://yourportfolio.com" {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">Link to your personal website or portfolio.</p>
                   </FormItem>
                 )}
               />
@@ -327,11 +334,12 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="linkedin"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>LinkedIn</FormLabel>
+                    <FormLabel>💼 LinkedIn Profile</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="Your LinkedIn URL" {...field} />
+                      <Input type="url" placeholder="https://www.linkedin.com/in/yourprofile" {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">Your LinkedIn profile URL.</p>
                   </FormItem>
                 )}
               />
@@ -340,11 +348,12 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="instagram"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Instagram</FormLabel>
+                    <FormLabel>📸 Instagram Profile</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="Your Instagram URL" {...field} />
+                      <Input type="url" placeholder="https://www.instagram.com/yourusername" {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">Your Instagram profile URL.</p>
                   </FormItem>
                 )}
               />
@@ -353,11 +362,12 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="facebook"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Facebook</FormLabel>
+                    <FormLabel>👥 Facebook Profile</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="Your Facebook URL" {...field} />
+                      <Input type="url" placeholder="https://www.facebook.com/yourusername" {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">Your Facebook profile URL.</p>
                   </FormItem>
                 )}
               />
@@ -366,11 +376,12 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="telegram"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Telegram</FormLabel>
+                    <FormLabel>✈️ Telegram</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="Your Telegram URL" {...field} />
+                      <Input type="url" placeholder="https://t.me/yourusername" {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">Your Telegram profile URL or username.</p>
                   </FormItem>
                 )}
               />
@@ -379,18 +390,34 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="bio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bio</FormLabel>
+                    <FormLabel>📝 Bio</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Your Bio" {...field} />
+                      <Textarea {...field} />
                     </FormControl>
                     <FormMessage />
+                    <p className="text-sm text-muted-foreground">
+                      A brief description of yourself, your experiences, and your goals.
+                    </p>
+                  </FormItem>
+                )}
+              />
+
+                <FormField
+                control={form.control}
+                name="skills"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>✈️ Telegram</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                    <p className="text-sm text-muted-foreground">Skills must comma separated.</p>
                   </FormItem>
                 )}
               />
             </CardContent>
           </Card>
-
-
 
           {/* Education Card */}
           <Card>
@@ -400,15 +427,14 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
             <CardContent className="space-y-4">
               {educationFields.map((field, index) => (
                 <div key={field.id} className="space-y-4 border p-4 rounded-lg">
-                  {/* Existing education fields */}
                   <FormField
                     control={form.control}
                     name={`education.${index}.institution`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Institution Name</FormLabel>
+                        <FormLabel>🏫 Institution Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="University Name" {...field} />
+                          <Input placeholder="University or School Name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -419,9 +445,9 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     name={`education.${index}.location`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Location</FormLabel>
+                        <FormLabel>📍 Location</FormLabel>
                         <FormControl>
-                          <Input placeholder="Location" {...field} />
+                          <Input placeholder="City, Country" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -432,9 +458,9 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     name={`education.${index}.degree`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Degree</FormLabel>
+                        <FormLabel>🎓 Degree</FormLabel>
                         <FormControl>
-                          <Input placeholder="Degree" {...field} />
+                          <Input placeholder="e.g., Bachelor of Science" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -445,19 +471,15 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     name={`education.${index}.major`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Major</FormLabel>
+                        <FormLabel>📚 Major</FormLabel>
                         <FormControl>
-                          <Input placeholder="Major" {...field} />
+                          <Input placeholder="e.g., Computer Science" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  {/* Other existing fields */}
-
-                  {/* Duration fields */}
                   {renderDurationFields(index, "education")}
-
                   <Button type="button" variant="destructive" onClick={() => removeEducation(index)}>
                     <Trash className="w-4 h-4 mr-2" /> Remove
                   </Button>
@@ -491,15 +513,14 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
             <CardContent className="space-y-4">
               {workFields.map((field, index) => (
                 <div key={field.id} className="space-y-4 border p-4 rounded-lg">
-                  {/* Existing work fields */}
                   <FormField
                     control={form.control}
                     name={`work.${index}.company`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Company Name</FormLabel>
+                        <FormLabel>🏢 Company Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Company Name" {...field} />
+                          <Input placeholder="Enter company name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -510,9 +531,9 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     name={`work.${index}.location`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Location</FormLabel>
+                        <FormLabel>📍 Location</FormLabel>
                         <FormControl>
-                          <Input placeholder="Location" {...field} />
+                          <Input placeholder="City, Country" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -523,19 +544,15 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     name={`work.${index}.position`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Position</FormLabel>
+                        <FormLabel>💼 Position</FormLabel>
                         <FormControl>
-                          <Input placeholder="Position" {...field} />
+                          <Input placeholder="e.g., Software Engineer" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  {/* Other existing fields */}
-
-                  {/* Duration fields */}
                   {renderDurationFields(index, "work")}
-
                   <Button type="button" variant="destructive" onClick={() => removeWork(index)}>
                     <Trash className="w-4 h-4 mr-2" /> Remove
                   </Button>
@@ -568,15 +585,14 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
             <CardContent className="space-y-4">
               {projectFields.map((field, index) => (
                 <div key={field.id} className="space-y-4 border p-4 rounded-lg">
-                  {/* Existing project fields */}
                   <FormField
                     control={form.control}
                     name={`projects.${index}.name`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Project Name</FormLabel>
+                        <FormLabel>🚀 Project Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Project Name" {...field} />
+                          <Input placeholder="Enter project name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -587,9 +603,9 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     name={`projects.${index}.description`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Description</FormLabel>
+                        <FormLabel>📝 Description</FormLabel>
                         <FormControl>
-                          <Input placeholder="Description" {...field} />
+                          <Textarea placeholder="Briefly describe your project" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -600,19 +616,15 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     name={`projects.${index}.link`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Link</FormLabel>
+                        <FormLabel>🔗 Project Link</FormLabel>
                         <FormControl>
-                          <Input type="url" placeholder="Link" {...field} />
+                          <Input type="url" placeholder="https://yourproject.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  {/* Other existing fields */}
-
-                  {/* Duration fields */}
                   {renderDurationFields(index, "projects")}
-
                   <Button type="button" variant="destructive" onClick={() => removeProject(index)}>
                     <Trash className="w-4 h-4 mr-2" /> Remove
                   </Button>
