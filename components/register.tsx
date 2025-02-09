@@ -28,7 +28,7 @@ const Register = () => {
     setIsLoading(true);
     const signInResult = await signIn("email", {
       email,
-      callbackUrl: '/',
+      callbackUrl: `/${id}?edit=true`,
       redirect: false,
     });
     setIsLoading(false);
@@ -45,7 +45,7 @@ const Register = () => {
 
   const handleSignInGoogle = async() => {
     setGoogleIsLoading(true);
-    const signInResult = await signIn("google", {callbackUrl: '/'});
+    const signInResult = await signIn("google", {callbackUrl: `/${id}?edit=true`});
     if (!signInResult) {
       setGoogleIsLoading(false);
       return;
