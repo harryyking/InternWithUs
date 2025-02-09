@@ -6,17 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import {
-  MapPin,
-  Globe,
-  Linkedin,
-  Mail,
-  Building,
-  ExternalLink,
-  Briefcase,
-  GraduationCap,
-  FolderGit2,
-} from "lucide-react"
 import { useSearchParams, useRouter } from "next/navigation"
 import UserProfileForm from "@/components/user-form"
 
@@ -26,16 +15,18 @@ type ParamsProps = {
   }
 }
 
-const ProfileSection: React.FC<{ title: string; icon: React.ReactNode; children: React.ReactNode }> = ({
+const ProfileSection: React.FC<{ title: string; emoji: string; children: React.ReactNode }> = ({
   title,
-  icon,
+  emoji,
   children,
 }) => (
   <Card className="mb-6">
     <CardHeader>
       <CardTitle className="flex items-center text-xl">
-        {icon}
-        <span className="ml-2">{title}</span>
+        <span className="mr-2" role="img" aria-label={title}>
+          {emoji}
+        </span>
+        <span>{title}</span>
       </CardTitle>
     </CardHeader>
     <CardContent>{children}</CardContent>
@@ -150,25 +141,22 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
 
       {/* Edit Button */}
       <div className="max-w-4xl mx-auto px-4 mt-24 mb-8 flex justify-end">
-        <Button onClick={toggleEditMode}>Edit Profile</Button>
+        <Button onClick={toggleEditMode}>✏️ Edit Profile</Button>
       </div>
 
       {/* Profile Sections */}
       <div className="max-w-4xl mx-auto px-4">
-        <ProfileSection title="Personal Information" icon={<Mail className="w-6 h-6" />}>
+        <ProfileSection title="Personal Information" emoji="📋">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center">
-              <MapPin className="w-5 h-5 mr-2 text-gray-500" />
-              <span>{user.location}</span>
-            </div>
-            <div className="flex items-center">
-              <Mail className="w-5 h-5 mr-2 text-gray-500" />
+            <p>📍 {user.location}</p>
+            <p>
+              📧{" "}
               <a href={`mailto:${user.email}`} className="text-blue-500 hover:underline">
                 {user.email}
               </a>
-            </div>
-            <div className="flex items-center">
-              <Globe className="w-5 h-5 mr-2 text-gray-500" />
+            </p>
+            <p>
+              🌐{" "}
               <a
                 href={user.website}
                 target="_blank"
@@ -177,9 +165,9 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
               >
                 {user.website}
               </a>
-            </div>
-            <div className="flex items-center">
-              <Linkedin className="w-5 h-5 mr-2 text-gray-500" />
+            </p>
+            <p>
+              👔{" "}
               <a
                 href={user.linkedin}
                 target="_blank"
@@ -188,14 +176,14 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
               >
                 {user.linkedin.split("/").pop()}
               </a>
-            </div>
+            </p>
           </div>
           <div className="mt-4">
-            <h3 className="font-semibold mb-2">Bio</h3>
+            <h3 className="font-semibold mb-2">📝 Bio</h3>
             <p>{user.bio}</p>
           </div>
           <div className="mt-4">
-            <h3 className="font-semibold mb-2">Skills</h3>
+            <h3 className="font-semibold mb-2">🛠️ Skills</h3>
             <div className="flex flex-wrap gap-2">
               {user.skills.map((skill) => (
                 <Badge key={skill} variant="secondary">
@@ -206,26 +194,23 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
           </div>
         </ProfileSection>
 
-        <ProfileSection title="Education" icon={<GraduationCap className="w-6 h-6" />}>
+        <ProfileSection title="Education" emoji="🎓">
           <Accordion type="single" collapsible>
             {user.education.map((edu, index) => (
               <AccordionItem value={`education-${index}`} key={index}>
                 <AccordionTrigger>
-                  <div className="flex items-center">
-                    <GraduationCap className="w-5 h-5 mr-2" />
-                    <span>{edu.institution}</span>
-                  </div>
+                  <span>🏫 {edu.institution}</span>
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="pl-7">
                     <p>
-                      <strong>Degree:</strong> {edu.degree}
+                      🎓 <strong>Degree:</strong> {edu.degree}
                     </p>
                     <p>
-                      <strong>Major:</strong> {edu.major}
+                      📚 <strong>Major:</strong> {edu.major}
                     </p>
                     <p>
-                      <strong>Duration:</strong> {edu.startDate} - {edu.endDate || "Present"}
+                      🗓️ <strong>Duration:</strong> {edu.startDate} - {edu.endDate || "Present"}
                     </p>
                   </div>
                 </AccordionContent>
@@ -234,23 +219,20 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
           </Accordion>
         </ProfileSection>
 
-        <ProfileSection title="Work Experience" icon={<Briefcase className="w-6 h-6" />}>
+        <ProfileSection title="Work Experience" emoji="💼">
           <Accordion type="single" collapsible>
             {user.work.map((work, index) => (
               <AccordionItem value={`work-${index}`} key={index}>
                 <AccordionTrigger>
-                  <div className="flex items-center">
-                    <Building className="w-5 h-5 mr-2" />
-                    <span>{work.company}</span>
-                  </div>
+                  <span>🏢 {work.company}</span>
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="pl-7">
                     <p>
-                      <strong>Position:</strong> {work.position}
+                      👨‍💼 <strong>Position:</strong> {work.position}
                     </p>
                     <p>
-                      <strong>Duration:</strong> {work.startDate} - {work.isCurrently ? "Present" : work.endDate}
+                      🗓️ <strong>Duration:</strong> {work.startDate} - {work.isCurrently ? "Present" : work.endDate}
                     </p>
                   </div>
                 </AccordionContent>
@@ -259,15 +241,12 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
           </Accordion>
         </ProfileSection>
 
-        <ProfileSection title="Projects" icon={<FolderGit2 className="w-6 h-6" />}>
+        <ProfileSection title="Projects" emoji="🚀">
           <Accordion type="single" collapsible>
             {user.projects.map((project, index) => (
               <AccordionItem value={`project-${index}`} key={index}>
                 <AccordionTrigger>
-                  <div className="flex items-center">
-                    <FolderGit2 className="w-5 h-5 mr-2" />
-                    <span>{project.name}</span>
-                  </div>
+                  <span>📁 {project.name}</span>
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="pl-7">
@@ -279,7 +258,7 @@ const Page: React.FC<ParamsProps> = ({ params }) => {
                         rel="noopener noreferrer"
                         className="text-blue-500 hover:underline flex items-center mt-2"
                       >
-                        View Project <ExternalLink className="w-4 h-4 ml-1" />
+                        🔗 View Project
                       </a>
                     )}
                   </div>
