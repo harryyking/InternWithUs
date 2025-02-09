@@ -234,7 +234,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>👤 Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your full name" {...field} />
+                      <Input  {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">
@@ -250,7 +250,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>📧 Email Address</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="your.email@example.com" {...field} />
+                      <Input type="email" {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">
@@ -308,7 +308,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>📍 Location</FormLabel>
                     <FormControl>
-                      <Input placeholder="City, Country" {...field} />
+                      <Input  {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your current city and country of residence.</p>
@@ -322,7 +322,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>🌐 Portfolio Website</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="https://yourportfolio.com" {...field} />
+                      <Input type="url"  {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Link to your personal website or portfolio.</p>
@@ -336,7 +336,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>💼 LinkedIn Profile</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="https://www.linkedin.com/in/yourprofile" {...field} />
+                      <Input type="url" {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your LinkedIn profile URL.</p>
@@ -350,7 +350,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>📸 Instagram Profile</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="https://www.instagram.com/yourusername" {...field} />
+                      <Input type="url" {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your Instagram profile URL.</p>
@@ -364,7 +364,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>👥 Facebook Profile</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="https://www.facebook.com/yourusername" {...field} />
+                      <Input type="url"  {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your Facebook profile URL.</p>
@@ -378,7 +378,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>✈️ Telegram</FormLabel>
                     <FormControl>
-                      <Input type="url" placeholder="https://t.me/yourusername" {...field} />
+                      <Input type="url" {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your Telegram profile URL or username.</p>
@@ -407,7 +407,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                 name="skills"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>✈️ Telegram</FormLabel>
+                    <FormLabel>🎓 Skills</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
