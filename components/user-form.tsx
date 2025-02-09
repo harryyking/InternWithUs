@@ -51,6 +51,7 @@ export type ProjectInput = z.infer<typeof ProjectSchema>
 const ProfileSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
+  username: z.string().min(1, "Username is required"),
   location: z.string().min(1, "Location is required"),
   portfolio: z.string().url("Invalid URL").optional(),
   linkedin: z.string().url("Invalid URL").optional(),
@@ -71,7 +72,7 @@ export type ProfileFormValues = z.infer<typeof ProfileSchema>
 // Add this type definition at the top of the file, after the other type definitions
 type FormSection = "education" | "work" | "projects" 
 
-const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
+const UserProfileForm = ({ username }: {username: string}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [newSkill, setNewSkill] = useState("")
@@ -129,11 +130,12 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
     try {
       setIsLoading(true)
 
-      await updateUserProfile(id, {
+      await updateUserProfile(username, {
         name: data.name,
         email: data.email,
         location: data.location,
         portfolio: data.portfolio,
+        username: data.username,
         linkedin: data.linkedin,
         instagram: data.instagram,
         facebook: data.facebook,
@@ -145,9 +147,9 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
       })
 
       await Promise.all([
-        ...data.education.map((edu) => updateEducation(id, edu)),
-        ...data.work.map((work) => updateWork(id, work)),
-        ...data.projects.map((project) => updateProject(id, project)),
+        ...data.education.map((edu) => updateEducation(username, edu)),
+        ...data.work.map((work) => updateWork(username, work)),
+        ...data.projects.map((project) => updateProject(username, project)),
       ])
 
       // Add a success message or notification here
@@ -255,6 +257,23 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">
                       Your primary email for account-related communications.
+                    </p>
+                  </FormItem>
+                )}
+              />
+
+                <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>🙍‍♂️ Username</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                    <p className="text-sm text-muted-foreground">
+                      A unique name for your profile
                     </p>
                   </FormItem>
                 )}

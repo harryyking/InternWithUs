@@ -21,11 +21,12 @@ export async function updateUserProfile(
         facebook?: string;
         bio: string;
         telegram?: string;
+        username: string;
   }
 ) {
   try {
     const user = await prisma.user.update({
-      where: { id: userId },
+      where: { username: userId },
       data: data
     })
     revalidatePath('/profile')
