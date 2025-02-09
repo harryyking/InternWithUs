@@ -26,7 +26,7 @@ export async function updateUserProfile(
 ) {
   try {
     const user = await prisma.user.update({
-      where: { username: userId },
+      where: { id: userId },
       data: data
     })
     revalidatePath('/profile')

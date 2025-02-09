@@ -72,7 +72,7 @@ export type ProfileFormValues = z.infer<typeof ProfileSchema>
 // Add this type definition at the top of the file, after the other type definitions
 type FormSection = "education" | "work" | "projects" 
 
-const UserProfileForm = ({ username }: {username: string}) => {
+const UserProfileForm = ({ id }: {id: string}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [newSkill, setNewSkill] = useState("")
@@ -130,7 +130,7 @@ const UserProfileForm = ({ username }: {username: string}) => {
     try {
       setIsLoading(true)
 
-      await updateUserProfile(username, {
+      await updateUserProfile(id, {
         name: data.name,
         email: data.email,
         location: data.location,
@@ -147,9 +147,9 @@ const UserProfileForm = ({ username }: {username: string}) => {
       })
 
       await Promise.all([
-        ...data.education.map((edu) => updateEducation(username, edu)),
-        ...data.work.map((work) => updateWork(username, work)),
-        ...data.projects.map((project) => updateProject(username, project)),
+        ...data.education.map((edu) => updateEducation(id, edu)),
+        ...data.work.map((work) => updateWork(id, work)),
+        ...data.projects.map((project) => updateProject(id, project)),
       ])
 
       // Add a success message or notification here

@@ -6,16 +6,16 @@ import { notFound } from "next/navigation"
 
 type ParamsProps = {
   params: {
-    username: string
+    id: string
   }
   searchParams: {
     edit?: string
   }
 }
 
-async function getUser(username: string) {
+async function getUser(id: string) {
   const user = await prisma.user.findUnique({
-    where: { username },
+    where: { id },
     include: {
       education: true,
       work: true,
@@ -31,11 +31,11 @@ async function getUser(username: string) {
 }
 
 export default async function Page({ params, searchParams }: ParamsProps) {
-  const user = await getUser(params.username)
+  const user = await getUser(params.id)
   const isEditMode = searchParams.edit === "true"
 
   if (isEditMode) {
-    return <UserProfileForm username={user.username} />
+    return <UserProfileForm id={user.id} />
   }
 
   return <ProfileView user={user} />
