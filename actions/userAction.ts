@@ -11,6 +11,9 @@ export async function updateUserProfile(
   data: {
         name: string;
         email: string;
+        logo: string[];
+        banner: string[];
+        skills: string[];
         location: string;
         portfolio?: string;
         linkedin?: string;

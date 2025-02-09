@@ -8,8 +8,11 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Checkbox } from "@/components/ui/checkbox"
 import { z } from "zod"
-import { Plus, Trash } from "lucide-react"
+import { Plus, Trash, X } from "lucide-react"
 import { updateEducation, updateProject, updateUserProfile, updateWork } from "@/actions/userAction"
+import { Textarea } from "./ui/textarea"
+import { UploadDropzone } from "@/lib/uploadthing"
+import { Badge } from "@/components/ui/badge"
 
 // Define schemas for individual entries
 const EducationSchema = z.object({
@@ -54,6 +57,9 @@ const ProfileSchema = z.object({
   instagram: z.string().url("Invalid URL").optional(),
   facebook: z.string().url("Invalid URL").optional(),
   bio: z.string(),
+  logo: z.array(z.string()),
+  banner: z.array(z.string()),
+  skills: z.array(z.string()),
   telegram: z.string().url("Invalid URL").optional(),
   education: z.array(EducationSchema),
   work: z.array(WorkSchema),
@@ -63,10 +69,12 @@ const ProfileSchema = z.object({
 export type ProfileFormValues = z.infer<typeof ProfileSchema>
 
 // Add this type definition at the top of the file, after the other type definitions
-type FormSection = "education" | "work" | "projects"
+type FormSection = "education" | "work" | "projects" | "skills"
 
 const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+  const [newSkill, setNewSkill] = useState("")
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileSchema),
@@ -75,7 +83,14 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
       email: "",
       location: "",
       portfolio: "",
+      linkedin: "",
+      instagram: "",
+      facebook: "",
       bio: "",
+      logo: [],
+      banner: [],
+      skills: [],
+      telegram: "",
       education: [],
       work: [],
       projects: [],
@@ -86,7 +101,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
     fields: educationFields,
     append: appendEducation,
     remove: removeEducation,
-  } = useFieldArray({
+  } = useFieldArray<ProfileFormValues>({
     control: form.control,
     name: "education",
   })
@@ -95,7 +110,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
     fields: workFields,
     append: appendWork,
     remove: removeWork,
-  } = useFieldArray({
+  } = useFieldArray<ProfileFormValues>({
     control: form.control,
     name: "work",
   })
@@ -104,10 +119,11 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
     fields: projectFields,
     append: appendProject,
     remove: removeProject,
-  } = useFieldArray({
+  } = useFieldArray<ProfileFormValues>({
     control: form.control,
     name: "projects",
   })
+
 
   const onSubmit = async (data: ProfileFormValues) => {
     try {
@@ -123,6 +139,9 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
         facebook: data.facebook,
         bio: data.bio,
         telegram: data.telegram,
+        logo: data.logo,
+        banner: data.banner,
+        skills: data.skills,
       })
 
       await Promise.all([
@@ -142,30 +161,18 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
   }
 
   // Update the renderDurationFields function
-  const renderDurationFields = (index: number, basePath: FormSection) => (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <FormField
-          control={form.control}
-          name={`${basePath}.${index}.startDate` as const}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Start Date</FormLabel>
-              <FormControl>
-                <Input type="month" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+  const renderDurationFields = (index: number, basePath: FormSection) => {
+    if (basePath === "skills") return null // Skills don't have duration fields
 
-        {!form.watch(`${basePath}.${index}.isCurrently` as const) && (
+    return (
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
-            name={`${basePath}.${index}.endDate` as const}
+            name={`${basePath}.${index}.startDate` as const}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>End Date</FormLabel>
+                <FormLabel>Start Date</FormLabel>
                 <FormControl>
                   <Input type="month" {...field} />
                 </FormControl>
@@ -173,38 +180,55 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
               </FormItem>
             )}
           />
-        )}
-      </div>
 
-      <FormField
-        control={form.control}
-        name={`${basePath}.${index}.isCurrently` as const}
-        render={({ field }) => (
-          <FormItem className="flex items-center space-x-2">
-            <FormControl>
-              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-            </FormControl>
-            <FormLabel className="mt-0">
-              {basePath === "education" && "Currently Studying Here"}
-              {basePath === "work" && "Currently Working Here"}
-              {basePath === "projects" && "Ongoing Project"}
-            </FormLabel>
-          </FormItem>
-        )}
-      />
-    </div>
-  )
+          {!form.watch(`${basePath}.${index}.isCurrently` as const) && (
+            <FormField
+              control={form.control}
+              name={`${basePath}.${index}.endDate` as const}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>End Date</FormLabel>
+                  <FormControl>
+                    <Input type="month" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+        </div>
+
+        <FormField
+          control={form.control}
+          name={`${basePath}.${index}.isCurrently` as const}
+          render={({ field }) => (
+            <FormItem className="flex items-center space-x-2">
+              <FormControl>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
+              <FormLabel className="mt-0">
+                {basePath === "education" && "Currently Studying Here"}
+                {basePath === "work" && "Currently Working Here"}
+                {basePath === "projects" && "Ongoing Project"}
+              </FormLabel>
+            </FormItem>
+          )}
+        />
+      </div>
+    )
+  }
+
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto p-6">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Personal Information Card - remains the same */}
+          {/* Personal Information Card */}
           <Card>
             <CardHeader>
               <CardTitle>Personal Information</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
               <FormField
                 control={form.control}
                 name="name"
@@ -231,6 +255,47 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   </FormItem>
                 )}
               />
+
+              {/* Image Upload */}
+              <div className="space-y-2">
+                <p className="font-semibold text-sm">Logo</p>
+                <UploadDropzone
+                  className="h-52 p-4"
+                  endpoint="userProfile"
+                  onUploadBegin={() => {
+                    setIsUploading(true)
+                  }}
+                  onClientUploadComplete={(res) => {
+                    const newImageUrls = res.map((fileData) => fileData.url)
+                    form.setValue("logo", newImageUrls)
+                    setIsUploading(false)
+                  }}
+                  onUploadError={(error: Error) => {
+                    setIsUploading(false)
+                  }}
+                />
+              </div>
+
+              {/* Image Upload */}
+              <div className="space-y-2">
+                <p className="font-semibold text-sm">Banner Photo</p>
+                <UploadDropzone
+                  className="h-52 p-4"
+                  endpoint="userProfile"
+                  onUploadBegin={() => {
+                    setIsUploading(true)
+                  }}
+                  onClientUploadComplete={(res) => {
+                    const newImageUrls = res.map((fileData) => fileData.url)
+                    form.setValue("banner", newImageUrls)
+                    setIsUploading(false)
+                  }}
+                  onUploadError={(error: Error) => {
+                    setIsUploading(false)
+                  }}
+                />
+              </div>
+
               <FormField
                 control={form.control}
                 name="location"
@@ -316,7 +381,7 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
                   <FormItem>
                     <FormLabel>Bio</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your Bio" {...field} />
+                      <Textarea placeholder="Your Bio" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -324,6 +389,8 @@ const UserProfileForm: React.FC<{ id: string }> = ({ id }) => {
               />
             </CardContent>
           </Card>
+
+
 
           {/* Education Card */}
           <Card>

@@ -51,6 +51,8 @@ model User {
   instagram     String?
   portfolio     String?
   skill          String[]
+  logo          String[]
+  banner        String[]
   bio           String
   role          UserRole    @default(JOBSEEKER)
   
