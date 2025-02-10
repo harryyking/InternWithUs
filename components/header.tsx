@@ -78,7 +78,7 @@ export async function Header() {
           <DropdownMenuLabel>Your Profile</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          <Link href={`/${user}`}>
+          <Link href={`/${user.id}`}>
           <DropdownMenuItem>👤 My Profile</DropdownMenuItem>
           </Link>
           
