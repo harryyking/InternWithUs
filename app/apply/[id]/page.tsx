@@ -1,8 +1,37 @@
+import { Button } from '@/components/ui/button'
+import prisma from '@/lib/db'
 import React from 'react'
 
-const page = () => {
+type Paramprops = {
+  params: {
+    id: string
+  }
+}
+
+  
+
+const page = async({params}: Paramprops) => {
+  const jobId = await prisma.job.findUnique({
+    where: {id: params.id}
+  })
+
+  if(!jobId) return null
+
+ 
+
   return (
-    <div>page</div>
+    <div className='max-w-6xl mx-auto bg-gray-50'>
+      <h1>
+      <span className='text-4xl font-semibold'>{jobId.companyName}</span> is hiring a {jobId.position}
+      </h1>
+
+      <p>{jobId.description}</p>
+
+
+      <Button size={"lg"} className='mx-auto '>Apply for this job</Button>
+
+
+    </div>
   )
 }
 
