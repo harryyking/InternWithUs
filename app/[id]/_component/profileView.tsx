@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ProfileFormValues } from "@/components/user-form"
+import { User } from "../page"
 
 const ProfileSection: React.FC<{ title: string; emoji: string; children: React.ReactNode }> = ({
   title,
@@ -36,7 +37,12 @@ const ProfileView: React.FC<{ user: any }> = ({ user }) => {
     <div className="bg-gray-50 min-h-screen pb-12">
       {/* Banner */}
       <div className="relative h-64 bg-gray-200 rounded-t-lg overflow-hidden">
-        <img src={user.bannerImage || "/placeholder.svg"} alt="Banner" className="w-full h-full object-cover" />
+        {
+          user.banner.map((banner: any) => (
+
+            <img src={banner || "/placeholder.svg"} alt="Banner" className="w-full h-full object-cover" />
+          ))
+        }
         <div className="absolute bottom-0 left-0 right-0">
           <svg
             viewBox="0 0 1440 120"
@@ -51,13 +57,17 @@ const ProfileView: React.FC<{ user: any }> = ({ user }) => {
       {/* Profile Image and Name */}
       <div className="relative max-w-4xl mx-auto px-4">
         <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-          <img
-            src={user.profileImage || "/placeholder.svg"}
-            alt="Profile"
-            className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
-          />
+         {
+          user.logo.map((logo: any) => (
+            <img
+              src={logo[0] || "/placeholder.svg"}
+              alt="Profile"
+              className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
+            />
+
+          ))
+         } 
           <h1 className="mt-4 text-3xl font-bold text-center">{user.name}</h1>
-          <p className="text-xl text-gray-600">{user.title}</p>
         </div>
       </div>
 
@@ -80,12 +90,12 @@ const ProfileView: React.FC<{ user: any }> = ({ user }) => {
             <p>
               🌐{" "}
               <a
-                href={user.website}
+                href={user.portfolio}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:underline"
               >
-                {user.website}
+                {user.portfolio}
               </a>
             </p>
             <p>
@@ -107,7 +117,7 @@ const ProfileView: React.FC<{ user: any }> = ({ user }) => {
           <div className="mt-4">
             <h3 className="font-semibold mb-2">🛠️ Skills</h3>
             <div className="flex flex-wrap gap-2">
-              {user.skills.map((skill: string) => (
+              {user.skill.map((skill: string) => (
                 <Badge key={skill} variant="secondary">
                   {skill}
                 </Badge>
@@ -143,7 +153,7 @@ const ProfileView: React.FC<{ user: any }> = ({ user }) => {
         </ProfileSection>
 
         <ProfileSection title="Projects" emoji="🚀">
-          {user.projects.map((project: any, index: number) => (
+          {user.project.map((project: any, index: number) => (
             <div key={index} className="mb-4 last:mb-0">
               <h3 className="font-semibold">📁 {project.name}</h3>
               <p>{project.description}</p>
