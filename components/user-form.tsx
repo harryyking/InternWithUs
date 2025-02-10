@@ -56,13 +56,13 @@ const ProfileSchema = z.object({
   location: z.string().min(1, "Location is required"),
   portfolio: z.string().url("Invalid URL").optional(),
   linkedin: z.string().url("Invalid URL").optional(),
-  instagram: z.string().url("Invalid URL").optional(),
+  instagram: z.string().optional(),
   facebook: z.string().url("Invalid URL").optional(),
   bio: z.string(),
   logo: z.array(z.string()),
   banner: z.array(z.string()),
   skills: z.array(z.string()),
-  telegram: z.string().url("Invalid URL").optional(),
+  telegram: z.string().optional(),
   education: z.array(EducationSchema),
   work: z.array(WorkSchema),
   projects: z.array(ProjectSchema),
@@ -393,7 +393,7 @@ const UserProfileForm = ({ id }: {id: string}) => {
                       <Input  {...field} />
                     </FormControl>
                     <FormMessage />
-                    <p className="text-sm text-muted-foreground">Your Instagram profile URL.</p>
+                    <p className="text-sm text-muted-foreground">Your Instagram username.</p>
                   </FormItem>
                 )}
               />

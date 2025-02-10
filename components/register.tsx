@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,16 +7,17 @@ import { Separator } from "@/components/ui/separator";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, LockKeyhole, ArrowRight, Loader2, Store } from 'lucide-react';
+import { getUserId } from '@/actions/userAction';
 
 
 
 const Register = () => {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [googleIsLoading, setGoogleIsLoading] = useState(false);
   const router = useRouter();
+
+
 
   const handleSignInMagicLink = async(e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ const Register = () => {
     setIsLoading(true);
     const signInResult = await signIn("email", {
       email,
-      callbackUrl: `/${id}?edit=true`,
+      callbackUrl: '/',
       redirect: false,
     });
     setIsLoading(false);
@@ -37,7 +38,7 @@ const Register = () => {
       setEmail("");
      
 
-      router.push(`/${id}?edit=true`); // Redirect to /store after showing the success toast
+      router.push('/'); // Redirect to /store after showing the success toast
     } else {
 
     }
@@ -45,14 +46,14 @@ const Register = () => {
 
   const handleSignInGoogle = async() => {
     setGoogleIsLoading(true);
-    const signInResult = await signIn("google", {callbackUrl: `/${id}?edit=true`});
+    const signInResult = await signIn("google", {callbackUrl: '/'});
     if (!signInResult) {
       setGoogleIsLoading(false);
       return;
     }
 
     if(signInResult.ok) {
-      router.push(`/${id}?edit=true`);
+      router.push('/');
 
 
     }

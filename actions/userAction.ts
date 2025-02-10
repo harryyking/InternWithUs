@@ -29,7 +29,7 @@ export async function updateUserProfile(
       where: { id: userId },
       data: data
     })
-    revalidatePath('/profile')
+    
     return { success: true, data: user }
   } catch (error) {
     return { success: false, error: "Failed to update profile" }
@@ -153,3 +153,14 @@ interface ActionResponse<T> {
   }
   
   
+
+  export async function getUserId (id: string) {
+    try {
+      
+      const user = await prisma.user.findUnique({
+        where: {id}
+      })
+    } catch (error) {
+      return { success: false, error: "Failed to get user id" };
+    }
+  }

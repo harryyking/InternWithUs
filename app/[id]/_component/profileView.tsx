@@ -28,7 +28,7 @@ const ProfileView: React.FC<{ user: any }> = ({ user }) => {
   const router = useRouter()
 
   const toggleEditMode = () => {
-    router.push(`/${user.username}?edit=true`)
+    router.push(`/${user.id}?edit=true`)
   }
 
   return (

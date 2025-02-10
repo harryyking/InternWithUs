@@ -5,6 +5,7 @@ import Link from "next/link"
 import { authOptions } from "@/lib/auth"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
+import prisma from "@/lib/db"
 
 
 export async function Header() {
@@ -39,6 +40,11 @@ export async function Header() {
 
   const profile = session.user.image!
 
+  const user = await prisma.user.findUnique({
+    where: {email: session.user.email},
+    select: {id: true}
+  })
+
   return (
     <header
     className="relative bg-transparent z-10"
@@ -63,15 +69,26 @@ export async function Header() {
             alt='profile pic'
             width={40}
             height={40}
+            className="rounded-full"
             />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Your Profile</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>My Profile</DropdownMenuItem>
-          <DropdownMenuItem>Frontpage</DropdownMenuItem>
-          <DropdownMenuItem>Hire Talents</DropdownMenuItem>
-          <DropdownMenuItem>Jobs</DropdownMenuItem>
+
+          <Link href={`/${user}`}>
+          <DropdownMenuItem>👤 My Profile</DropdownMenuItem>
+          </Link>
+          
+          <Link href='/'>
+          <DropdownMenuItem>🖥 Frontpage</DropdownMenuItem>
+          </Link>
+          <Link href='/talents'>
+          <DropdownMenuItem>👔 Hire Talents</DropdownMenuItem>
+          </Link>
+          <Link href="/">
+          <DropdownMenuItem>🛠 Jobs</DropdownMenuItem>
+          </Link>
         </DropdownMenuContent>
       </DropdownMenu>
           
