@@ -21,6 +21,7 @@ export async function createJob(
     region: string[]
     link?: string
     apply: string
+    companyLogo: string[]
   }
 ) {
   try {
@@ -37,6 +38,19 @@ export async function createJob(
 }
 
 
+export async function getJob() {
+  try {
+    const jobs = await prisma.job.findMany({})
+    return jobs
+  } catch (error) {
+    // Consider logging the error server-side
+    return []  // Return an empty array instead of an error object
+  }
+}
+
+
+
+
 enum LocationType {
     REMOTE,
     HYBRID,
@@ -50,6 +64,10 @@ enum EmploymentType {
     INTERNSHIP,
     FREELANCE
 }
+
+
+
+
 
 
 // export async function updateJobStatus(

@@ -23,7 +23,7 @@ const JobSchema = z.object({
   position: z.string().min(1, "Position is required"),
   description: z.string().min(1, "Job description is required"),
   companyName: z.string().min(1, "Company name is required"),
-  companyLogo: z.array(z.string()).optional(),
+  companyLogo: z.array(z.string()),
   location: z.string().min(1, "Location is required"),
   locationType: z.array(z.string()).min(1, "At least one location type is required"),
   tags: z.array(z.string()).min(1, "At least one tag is required"),
@@ -87,7 +87,8 @@ export default function JobPostingForm() {
         email: data.email,
         link: data.link,
         region: data.region,
-        apply: data.apply
+        apply: data.apply,
+        companyLogo: data.companyLogo
       }
       )
     } catch (error) {

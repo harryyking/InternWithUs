@@ -123,6 +123,7 @@ model Job {
   position        String
   description     String    @db.Text
   companyName     String
+  companyLogo     String[]
   employmentType  String[]
   location        String
   locationType    String[]
