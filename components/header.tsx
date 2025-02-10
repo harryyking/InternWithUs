@@ -45,6 +45,8 @@ export async function Header() {
     select: {id: true}
   })
 
+  if(!user) return 
+
   return (
     <header
     className="relative bg-transparent z-10"
