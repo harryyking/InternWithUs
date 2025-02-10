@@ -30,6 +30,8 @@ async function getUser(id: string) {
   return user
 }
 
+
+
 export default async function Page({ params, searchParams }: ParamsProps) {
   const user = await getUser(params.id)
   const isEditMode = searchParams.edit === "true"
@@ -37,7 +39,7 @@ export default async function Page({ params, searchParams }: ParamsProps) {
   if (isEditMode) {
     return (
       <div className="bg-gray-100">
-        
+
 
         <UserProfileForm id={user.id} />
       </div>

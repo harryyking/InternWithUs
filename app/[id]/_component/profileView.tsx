@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { ProfileFormValues } from "@/components/user-form"
 
 const ProfileSection: React.FC<{ title: string; emoji: string; children: React.ReactNode }> = ({
   title,
@@ -95,7 +96,7 @@ const ProfileView: React.FC<{ user: any }> = ({ user }) => {
                 rel="noopener noreferrer"
                 className="text-blue-500 hover:underline"
               >
-                {user.linkedin.split("/").pop()}
+                {user.linkedin}
               </a>
             </p>
           </div>
