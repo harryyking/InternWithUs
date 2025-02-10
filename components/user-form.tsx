@@ -362,7 +362,7 @@ const UserProfileForm = ({ id }: {id: string}) => {
                   <FormItem>
                     <FormLabel>🌐 Portfolio Website</FormLabel>
                     <FormControl>
-                      <Input type="url"  {...field} />
+                      <Input  {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Link to your personal website or portfolio.</p>
@@ -376,7 +376,7 @@ const UserProfileForm = ({ id }: {id: string}) => {
                   <FormItem>
                     <FormLabel>💼 LinkedIn Profile</FormLabel>
                     <FormControl>
-                      <Input type="url" {...field} />
+                      <Input  {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your LinkedIn profile URL.</p>
@@ -390,7 +390,7 @@ const UserProfileForm = ({ id }: {id: string}) => {
                   <FormItem>
                     <FormLabel>📸 Instagram Profile</FormLabel>
                     <FormControl>
-                      <Input type="url" {...field} />
+                      <Input  {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your Instagram profile URL.</p>
@@ -404,7 +404,7 @@ const UserProfileForm = ({ id }: {id: string}) => {
                   <FormItem>
                     <FormLabel>👥 Facebook Profile</FormLabel>
                     <FormControl>
-                      <Input type="url"  {...field} />
+                      <Input   {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your Facebook profile URL.</p>
@@ -418,7 +418,7 @@ const UserProfileForm = ({ id }: {id: string}) => {
                   <FormItem>
                     <FormLabel>✈️ Telegram</FormLabel>
                     <FormControl>
-                      <Input type="url" {...field} />
+                      <Input  {...field} />
                     </FormControl>
                     <FormMessage />
                     <p className="text-sm text-muted-foreground">Your Telegram profile URL or username.</p>
