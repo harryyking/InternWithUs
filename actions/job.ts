@@ -1,44 +1,56 @@
-// // app/actions/job.ts
-// "use server"
-// import prisma from "@/lib/db"
-// import { revalidatePath } from "next/cache"
+// app/actions/job.ts
+"use server"
+import prisma from "@/lib/db"
+import { revalidatePath } from "next/cache"
 
 
-// export async function createJob(
-//   userId: string,
-//   data: {
-//     position: string
-//     description: string
-//     companyId: string
-//     employmentType: EmploymentType
-//     location: string
-//     locationType: LocationType
-//     benefits: string[]
-//     requirements: string[]
-//     responsibilities: string[]
-//     salary: { min: number; max: number }
-//     email: string
-//     industryId: string
-//     requiredSkills: string[]
-//   }
-// ) {
-//   try {
-//     const job = await prisma.job.create({
-//       data: {
-//         ...data,
-//         posterId: userId,
-//         status: JobStatus.ACTIVE,
-//         requiredSkills: {
-//           connect: data.requiredSkills.map(id => ({ id }))
-//         }
-//       }
-//     })
-//     revalidatePath('/jobs')
-//     return { success: true, data: job }
-//   } catch (error) {
-//     return { success: false, error: "Failed to create job" }
-//   }
-// }
+export async function createJob(
+  data: {
+    position: string
+    description: string
+    companyName: string
+    tags: string[]
+    employmentType: string[]
+    location: string
+    locationType: string[]
+    salary: {
+        range: string
+        period: string
+    }
+    email: string
+    region: string[]
+    link?: string
+    apply: string
+  }
+) {
+  try {
+    const job = await prisma.job.create({
+      data: {
+        ...data
+      }
+    })
+    revalidatePath('/jobs')
+    return { success: true, data: job }
+  } catch (error) {
+    return { success: false, error: "Failed to create job" }
+  }
+}
+
+
+enum LocationType {
+    REMOTE,
+    HYBRID,
+    ONSITE
+}
+
+enum EmploymentType {
+    FULL_TIME,
+    PART_TIME,
+    CONTRACT,
+    INTERNSHIP,
+    FREELANCE
+}
+
 
 // export async function updateJobStatus(
 //   jobId: string,

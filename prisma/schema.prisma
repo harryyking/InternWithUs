@@ -123,10 +123,9 @@ model Job {
   position        String
   description     String    @db.Text
   companyName     String
-  employmentType  EmploymentType
+  employmentType  String[]
   location        String
-  locationType    LocationType @default(ONSITE)
-  benefits        String[]
+  locationType    String[]
   tags            String[]
   salary          Json      
   email           String
@@ -134,7 +133,6 @@ model Job {
   region          String[]
   status          JobStatus @default(ACTIVE)
   featured        Boolean   @default(false)
-  apply           String    @db.Text
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   expiresAt       DateTime?

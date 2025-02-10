@@ -17,6 +17,7 @@ import { Tiptap } from "./tiptap"
 import { UploadDropzone } from "@/lib/uploadthing"
 import { ArrowRight, DollarSign, MapPin, Briefcase, Tags, Mail, Link, Star } from "lucide-react"
 import React from "react"
+import { createJob } from "@/actions/job"
 
 const JobSchema = z.object({
   position: z.string().min(1, "Position is required"),
@@ -26,14 +27,16 @@ const JobSchema = z.object({
   location: z.string().min(1, "Location is required"),
   locationType: z.array(z.string()).min(1, "At least one location type is required"),
   tags: z.array(z.string()).min(1, "At least one tag is required"),
-  employmentType: z.string().min(1, "Employment type is required"),
+  employmentType: z.array(z.string()),
   email: z.string().email("Invalid email address"),
-  applyLink: z.string().url("Invalid URL").optional(),
+  link: z.string().url("Invalid URL").optional(),
+  region: z.array(z.string()),
   salary: z.object({
     range: z.string(),
     period: z.string(),
   }),
   highlightListing: z.boolean(),
+  apply: z.string()
 })
 
 type JobFormValues = z.infer<typeof JobSchema>
@@ -72,7 +75,21 @@ export default function JobPostingForm() {
     try {
       setIsLoading(true)
       setPreview(data)
-      console.log("Form data:", data)
+      await createJob({
+        position : data.position,
+        description: data.description,
+        companyName : data.companyName,
+        employmentType: data.employmentType,
+        location : data.location,
+        locationType: data.locationType,
+        tags: data.tags,
+        salary: data.salary,     
+        email: data.email,
+        link: data.link,
+        region: data.region,
+        apply: data.apply
+      }
+      )
     } catch (error) {
       console.error("Failed to submit job posting:", error)
     } finally {
@@ -204,7 +221,7 @@ export default function JobPostingForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Employment Type</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value?.[0]}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select employment type" />
@@ -353,7 +370,7 @@ export default function JobPostingForm() {
 
               <FormField
                 control={form.control}
-                name="applyLink"
+                name="link"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Application URL (optional)</FormLabel>
