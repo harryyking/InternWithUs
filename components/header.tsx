@@ -58,12 +58,11 @@ export async function Header() {
           
           <DropdownMenu>
   <DropdownMenuTrigger>
-            <Image 
+            <img 
             src={profile}
             alt='profile pic'
             width={40}
             height={40}
-            fill
             />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
