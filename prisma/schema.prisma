@@ -44,8 +44,8 @@ model User {
   username      String?      @unique
   emailVerified DateTime?   @map("email_verified")
   image         String?
-  phone         String
-  location      String
+  phone         String?
+  location      String?
   linkedin      String?
   telegram      String?
   instagram     String?
@@ -53,7 +53,7 @@ model User {
   skill          String[]
   logo          String[]
   banner        String[]
-  bio           String
+  bio           String?
   role          UserRole    @default(JOBSEEKER)
   
   education     Education[]
