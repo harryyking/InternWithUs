@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -79,6 +80,7 @@ export default function JobPostingForm() {
     }
   }
 
+  const companyLogo = form.watch("companyLogo") as string[];
   const moveToNextStep = () => {
     if (step < 3) setStep(step + 1)
   }
@@ -144,21 +146,34 @@ export default function JobPostingForm() {
               )}
             />
 
-            <div className="space-y-2">
-              <FormLabel>Company Logo</FormLabel>
-              <UploadDropzone
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  const urls = res?.map((file) => file.url) || []
-                  form.setValue("companyLogo", urls)
-                  setIsUploading(false)
-                }}
-                onUploadError={(error: Error) => {
-                  console.error(error)
-                  setIsUploading(false)
-                }}
-              />
-            </div>
+<div className="space-y-2">
+                <p className="font-semibold text-sm">🖼️ Logo</p>
+                <UploadDropzone
+                  className="h-52 p-4"
+                  endpoint="userProfile"
+                  onUploadBegin={() => {
+                    setIsUploading(true)
+                  }}
+                  onClientUploadComplete={(res) => {
+                    const newImageUrls = res.map((fileData) => fileData.url)
+                    form.setValue("companyLogo", newImageUrls)
+                    setIsUploading(false)
+                  }}
+                  onUploadError={(error: Error) => {
+                    setIsUploading(false)
+                  }}
+                />
+                <p className="text-sm text-muted-foreground">
+                  Upload a logo or profile picture (recommended size: 200x200px).
+                </p>
+              </div>
+              <div>
+                {companyLogo?.map((logo) => (
+                  <div className="overflow-hidden rounded-md" key={logo}>
+                    <Image src={logo} alt="product image" width={100} height={100} />
+                  </div>
+                ))}
+              </div>
           </div>
         )
 
