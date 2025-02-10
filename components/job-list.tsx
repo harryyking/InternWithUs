@@ -51,8 +51,8 @@ export default async function JobList() {
               </div>
              
               <div className="mt-4 flex justify-between items-center">
-                <Link href={`/apply/${job.id}`}>
-                <Button className="ml-auto">
+                <Link href={`/apply/${job.id}`} className="ml-auto">
+                <Button >
                   Apply
                 </Button>
                 </Link>

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import {Open_Sans, Gabarito} from 'next/font/google'
+import {Inter, Gabarito} from 'next/font/google'
 import Provider from "@/components/provider";
 
-const brandFont = Gabarito({subsets: ["latin"], weight: ["400","500", "700"]})
+const brandFont = Inter({subsets: ["latin"]})
 
 
 export const metadata: Metadata = {
