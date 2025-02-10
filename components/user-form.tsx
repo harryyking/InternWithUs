@@ -13,6 +13,7 @@ import { updateEducation, updateProject, updateUserProfile, updateWork } from "@
 import { Textarea } from "./ui/textarea"
 import { UploadDropzone } from "@/lib/uploadthing"
 import { Badge } from "@/components/ui/badge"
+import Image from 'next/image'
 
 // Define schemas for individual entries
 const EducationSchema = z.object({
@@ -219,6 +220,9 @@ const UserProfileForm = ({ id }: {id: string}) => {
     )
   }
 
+  const logos = form.watch("logo") as string[];
+  const banners = form.watch("banner") as string[];
+
   return (
     <div className="space-y-6 max-w-4xl mx-auto p-6">
       <Form {...form}>
@@ -299,6 +303,16 @@ const UserProfileForm = ({ id }: {id: string}) => {
                   Upload a logo or profile picture (recommended size: 200x200px).
                 </p>
               </div>
+              <div>
+                {logos?.map((logo) => (
+                  <div className="overflow-hidden rounded-md" key={logo}>
+                    <Image src={logo} alt="product image" width={100} height={100} />
+                  </div>
+                ))}
+              </div>
+
+
+
               <div className="space-y-2">
                 <p className="font-semibold text-sm">🏞️ Banner Photo</p>
                 <UploadDropzone
@@ -319,6 +333,13 @@ const UserProfileForm = ({ id }: {id: string}) => {
                 <p className="text-sm text-muted-foreground">
                   Upload a banner image for your profile (recommended size: 1500x500px).
                 </p>
+              </div>
+              <div>
+                {banners?.map((banner) => (
+                  <div className="overflow-hidden rounded-md" key={banner}>
+                    <Image src={banner} alt="product image" width={100} height={100} />
+                  </div>
+                ))}
               </div>
               <FormField
                 control={form.control}

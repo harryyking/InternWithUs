@@ -63,7 +63,7 @@ export async function Header() {
             alt='profile pic'
             width={40}
             height={40}
-            className="w-16 h-16"
+            fill
             />
         </DropdownMenuTrigger>
         <DropdownMenuContent>

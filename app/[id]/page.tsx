@@ -35,7 +35,13 @@ export default async function Page({ params, searchParams }: ParamsProps) {
   const isEditMode = searchParams.edit === "true"
 
   if (isEditMode) {
-    return <UserProfileForm id={user.id} />
+    return (
+      <div className="bg-gray-100">
+        
+
+        <UserProfileForm id={user.id} />
+      </div>
+    )
   }
 
   return <ProfileView user={user} />
